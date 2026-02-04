@@ -49,4 +49,29 @@ public class ObservacaoDAO {
         }
         return retorno > 0;
     }
+
+    public boolean deletarObs(String aluno, String disciplina) throws SQLException, ClassNotFoundException {
+        Conexao conexao = new Conexao();
+        Connection conn = conexao.conectar();
+        int retorno = 0;
+        try{
+            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM observacao\n" +
+                    "WHERE ID IN (" +
+                    "    SELECT o.ID" +
+                    "    FROM OBSERVACAO o" +
+                    "    JOIN ALUNO a ON o.COD_ALUNO = a.MATRICULA" +
+                    "    JOIN DISCIPLINA d ON o.COD_DISCIPLINA = d.ID" +
+                    "    WHERE a.NOME = ?" +
+                    "    AND d.NOME = ? )");
+            pstmt.setString(1, aluno);
+            pstmt.setString(2, disciplina);
+            retorno = pstmt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        finally {
+            conexao.desconectar(conn);
+        }
+        return retorno > 0;
+    }
 }
