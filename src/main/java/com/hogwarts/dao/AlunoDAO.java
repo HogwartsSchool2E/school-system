@@ -118,7 +118,6 @@ public class AlunoDAO {
 
     // Método de login
     public boolean login(String nome, String senha) throws ClassNotFoundException, SQLException {
-        // login aluno e professor
         Conexao conexao = new Conexao();
         Connection conn = conexao.conectar();
         boolean retorno = false;
