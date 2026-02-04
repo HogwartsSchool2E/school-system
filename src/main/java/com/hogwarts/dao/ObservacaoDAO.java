@@ -61,7 +61,7 @@ public class ObservacaoDAO {
         Connection conn = conexao.conectar();
         int retorno = 0;
         try{
-            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM observacao\n" +
+            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM observacao" +
                     "WHERE ID IN (" +
                     "    SELECT o.ID" +
                     "    FROM OBSERVACAO o" +
@@ -82,7 +82,7 @@ public class ObservacaoDAO {
     }
 
     // Método buscar obs por aluno
-    public List<String[]> buscarPorAluno(String nomeAluno) throws SQLException, ClassNotFoundException {
+    public List<String[]> buscarPorAluno(String aluno) throws SQLException, ClassNotFoundException {
         Conexao conexao = new Conexao();
         Connection conn = conexao.conectar();
 
@@ -91,7 +91,7 @@ public class ObservacaoDAO {
         try (PreparedStatement pstmt = conn.prepareStatement("SELECT a.NOME, o.OBSERVACAO FROM OBSERVACAO o " +
                 "JOIN ALUNO a ON o.COD_ALUNO = a.MATRICULA " +
                 "WHERE a.NOME = ?")) {
-            pstmt.setString(1, nomeAluno);
+            pstmt.setString(1, aluno);
 
             ResultSet rs = pstmt.executeQuery();
 
@@ -99,6 +99,41 @@ public class ObservacaoDAO {
                 String[] linha = new String[2];
                 linha[0] = rs.getString("NOME");
                 linha[1] = rs.getString("OBSERVACAO");
+
+                lista.add(linha);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            conexao.desconectar(conn);
+        }
+
+        return lista;
+
+    }
+
+    // Método buscar obs por aluno e disciplina
+    public List<String[]> buscarPorAlunoDisciplina(String aluno, String disciplina) throws SQLException, ClassNotFoundException {
+        Conexao conexao = new Conexao();
+        Connection conn = conexao.conectar();
+
+        List<String[]> lista = new ArrayList<>();
+
+        try (PreparedStatement pstmt = conn.prepareStatement("SELECT a.NOME AS Aluno, d.NOME AS Disciplina, o.OBSERVACAO FROM OBSERVACAO o " +
+                "JOIN ALUNO a ON o.COD_ALUNO = a.MATRICULA " +
+                "JOIN DISCIPLINA d ON o.COD_DISCIPLINA = d.ID " +
+                "WHERE a.NOME = ? AND d.NOME = ?")) {
+            pstmt.setString(1, aluno);
+            pstmt.setString(2, disciplina);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while(rs.next()) {
+                String[] linha = new String[3];
+                linha[0] = rs.getString("Aluno");
+                linha[1] = rs.getString("Disciplina");
+                linha[2] = rs.getString("OBSERVACAO");
 
                 lista.add(linha);
             }
