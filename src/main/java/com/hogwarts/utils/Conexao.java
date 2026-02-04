@@ -17,4 +17,14 @@ public class Conexao {
         Class.forName("org.postgresql.Driver");
         return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
     }
+
+    public void desconectar(Connection conn){
+        try {
+            if (conn != null && !conn.isClosed()) {
+                conn.close();
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 }
