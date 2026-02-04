@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<main>
+    <form action="dashboard-servlet" method="get">
+        <input type="submit" value="Clique aqui para ver dashboards">
+    </form>
+
+    <form method="get" action="boletim-servlet">
+        <button type="submit" name="tipo" value="todos">
+            Boletim de todos os alunos
+        </button>
+    </form>
+
+    <div class="modal">
+        <button type="button" name="tipo" class="abre-modal" data-modal="modal-1">
+            Boletim individual
+        </button>
+
+        <dialog id="modal-1">
+            <button type="button" class="fecha-modal" data-modal="modal-1">x</button>
+
+            <form action="boletim-servlet" method="get">
+                <label for="matricula">Digite a matrícula do aluno:</label>
+                <input type="number" name="matricula" id="matricula" autocomplete="on" min="1000" required>
+                <button type="submit" name="tipo" value="individual">
+                    Enviar dados
+                </button>
+            </form>
+        </dialog>
+    </div>
+</main>
+
+<script src="js/script.js"></script>
+</body>
+</html>

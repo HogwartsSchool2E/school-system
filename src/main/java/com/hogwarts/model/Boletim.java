@@ -1,8 +1,6 @@
 package com.hogwarts.model;
 
-import com.hogwarts.model.banco.Aluno;
-import com.hogwarts.model.banco.Disciplina;
-import com.hogwarts.model.banco.Observacao;
+import com.hogwarts.model.banco.*;
 import com.hogwarts.model.enums.Situacao;
 
 public class Boletim {
@@ -14,15 +12,19 @@ public class Boletim {
     private Observacao observacao;
     private Situacao situacao;
     private Disciplina disciplina;
+    private Professor professor;
+    private CasaHogwarts casaHogwarts;
 
 //    Construtor
-    public Boletim(Aluno aluno, double nota1, double nota2, Observacao observacao, Disciplina disciplina) {
+    public Boletim(Aluno aluno, double nota1, double nota2, Observacao observacao, Disciplina disciplina, Professor professor, CasaHogwarts casaHogwarts) {
         this.aluno = aluno;
         this.nota1 = nota1;
         this.nota2 = nota2;
         this.media = (nota1 + nota2) / 2;
         this.observacao = observacao;
         this.disciplina = disciplina;
+        this.professor = professor;
+        this.casaHogwarts = casaHogwarts;
 
         if (this.media <= 5) this.situacao = Situacao.REPROVADO;
         else if (this.media < 7) this.situacao = Situacao.RECUPERACAO;
@@ -84,5 +86,21 @@ public class Boletim {
 
     public void setDisciplina(Disciplina disciplina) {
         this.disciplina = disciplina;
+    }
+
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
+    }
+
+    public CasaHogwarts getCasaHogwarts() {
+        return casaHogwarts;
+    }
+
+    public void setCasaHogwarts(CasaHogwarts casaHogwarts) {
+        this.casaHogwarts = casaHogwarts;
     }
 }

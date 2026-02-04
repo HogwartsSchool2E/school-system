@@ -1,10 +1,7 @@
 package com.hogwarts.dao;
 
 import com.hogwarts.model.*;
-import com.hogwarts.model.banco.Aluno;
-import com.hogwarts.model.banco.Disciplina;
-import com.hogwarts.model.banco.Nota;
-import com.hogwarts.model.banco.Observacao;
+import com.hogwarts.model.banco.*;
 import com.hogwarts.utils.Conexao;
 
 import java.sql.*;
@@ -14,15 +11,19 @@ import java.util.List;
 public class AlunoDAO {
 
 //    Método de geração de boletim de um aluno
-    public Boletim gerarBoletimIndividual(int matricula){
-        // Query SQL
+    public List<Boletim> gerarBoletimIndividual(int matricula){
+        // Criando atributos
+        List<Boletim> boletins = new ArrayList<>();
         String sql = """
-                SELECT a.nome as "aluno", d.nome as "disciplina", n.nota_um, n.nota_dois, o.observacao
+                SELECT a.nome as "aluno", d.nome as "disciplina", n.nota_um, n.nota_dois, o.observacao, p.nome as "professor", c.nome as "casa_hogwarts"
                 FROM aluno a
-                JOIN nota n ON n.cod_aluno = a.matricula
-                JOIN disciplina d ON d.id = n.cod_disciplina
-                LEFT JOIN observacao o ON o.cod_aluno = a.matricula AND o.cod_disciplina = d.id
-                WHERE a.matricula = ?;
+                JOIN casa_hogwarts c ON a.cod_casa = c.id
+                JOIN disciplina d ON d.id IN (SELECT cod_disciplina FROM nota WHERE cod_aluno = a.matricula)
+                LEFT JOIN nota n ON n.cod_aluno = a.matricula AND n.cod_disciplina = d.id
+                JOIN professor p ON p.cod_disciplina = d.id
+                LEFT JOIN observacao o ON o.cod_aluno = a.matricula AND d.id = o.cod_disciplina
+                WHERE a.matricula = ?
+                ORDER BY a.nome;
                 """;
 
         // Realizando busca no banco de dados-
@@ -34,11 +35,13 @@ public class AlunoDAO {
             ResultSet rs = pstmt.executeQuery();
 
             // Inserindo os valores nos objetos
-            if (rs.next()){
+            while (rs.next()){
                 Disciplina d = new Disciplina();
                 Nota n = new Nota();
                 Observacao o = new Observacao();
                 Aluno a = new Aluno();
+                Professor p = new Professor();
+                CasaHogwarts c = new CasaHogwarts();
 
                 // Capturando valores da seleção
                 d.setNome(rs.getString("disciplina"));
@@ -50,11 +53,15 @@ public class AlunoDAO {
 
                 a.setNome(rs.getString("aluno"));
 
+                p.setNome(rs.getString("professor"));
+
+                c.setNome(rs.getString("casa_hogwarts"));
+
                 // Geração do boletim
-                return new Boletim(a, n.getNotaUm(), n.getNotaDois(), o, d);
-            }
-        } catch (SQLException sqle){
-            sqle.printStackTrace();
+                boletins.add(new Boletim(a, n.getNotaUm(), n.getNotaDois(), o, d, p, c));
+            } return boletins;
+        } catch (SQLException | ClassNotFoundException e){
+            e.printStackTrace();
         } return null;
     }
 
@@ -63,12 +70,14 @@ public class AlunoDAO {
         // Criando atributos
         List<Boletim> boletins = new ArrayList<>();
         String sql = """
-                    SELECT a.nome as "aluno", d.nome as "disciplina", n.nota_um, n.nota_dois, o.observacao
-                    FROM aluno a
-                    JOIN nota n ON n.cod_aluno = a.matricula
-                    JOIN disciplina d ON d.id = n.cod_disciplina
-                    LEFT JOIN observacao o ON o.cod_aluno = a.matricula AND o.cod_disciplina = d.id;
-                    """;
+                SELECT a.nome as "aluno", d.nome as "disciplina", n.nota_um, n.nota_dois, o.observacao, p.nome as "professor", c.nome as "casa_hogwarts"
+                FROM aluno a
+                JOIN casa_hogwarts c ON a.cod_casa = c.id
+                JOIN disciplina d ON d.id IN (SELECT cod_disciplina FROM nota WHERE cod_aluno = a.matricula)
+                LEFT JOIN nota n ON n.cod_aluno = a.matricula AND n.cod_disciplina = d.id
+                JOIN professor p ON p.cod_disciplina = d.id
+                LEFT JOIN observacao o ON o.cod_aluno = a.matricula AND d.id = o.cod_disciplina
+                ORDER BY a.nome;""";
 
         // Realizando busca no banco de dados
         try ( Connection conn = Conexao.conectar();
@@ -82,6 +91,8 @@ public class AlunoDAO {
                 Nota n = new Nota();
                 Observacao o = new Observacao();
                 Aluno a = new Aluno();
+                Professor p = new Professor();
+                CasaHogwarts c = new CasaHogwarts();
 
                 // Capturando valores da seleção
                 d.setNome(rs.getString("disciplina"));
@@ -93,11 +104,15 @@ public class AlunoDAO {
 
                 a.setNome(rs.getString("aluno"));
 
+                p.setNome(rs.getString("professor"));
+
+                c.setNome(rs.getString("casa_hogwarts"));
+
                 // Geração do boletim
-                boletins.add(new Boletim(a, n.getNotaUm(), n.getNotaDois(), o, d));
+                boletins.add(new Boletim(a, n.getNotaUm(), n.getNotaDois(), o, d, p, c));
             } return boletins;
-        } catch (SQLException sqle){
-            sqle.printStackTrace();
+        } catch (SQLException | ClassNotFoundException e){
+            e.printStackTrace();
         } return null;
     }
 }

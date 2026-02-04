@@ -13,7 +13,8 @@ public class Conexao {
     private static final String dbPassword = dotenv.get("PASSWORD");
     private static final String dbUrl = dotenv.get("URL");
 
-    public static Connection conectar() throws SQLException{
+    public static Connection conectar() throws SQLException, ClassNotFoundException{
+        Class.forName("org.postgresql.Driver");
         return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
     }
 }

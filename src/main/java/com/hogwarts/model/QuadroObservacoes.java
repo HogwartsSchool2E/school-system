@@ -49,4 +49,14 @@ public class QuadroObservacoes {
     public void setObservacao(String observacao) {
         this.observacao = observacao;
     }
+
+    @Override
+    public String toString() {
+        return "QuadroObservacoes{" +
+                "aluno='" + aluno + '\'' +
+                ", casa='" + casa + '\'' +
+                ", professor='" + professor + '\'' +
+                ", observacao='" + observacao + '\'' +
+                '}';
+    }
 }

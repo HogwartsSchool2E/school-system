@@ -52,4 +52,14 @@ public class Dashboard {
     public void setQuadroObservacoes(List<QuadroObservacoes> quadroObservacoes) {
         this.quadroObservacoes = quadroObservacoes;
     }
+
+    @Override
+    public String toString() {
+        return "Dashboard{" +
+                "ranking=" + ranking +
+                ", qtdAlunos=" + qtdAlunos +
+                ", mediaCasas=" + mediaCasas +
+                ", quadroObservacoes=" + quadroObservacoes +
+                '}';
+    }
 }

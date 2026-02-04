@@ -39,8 +39,8 @@ public class DashboardDAO {
 
                 ranking.put(aluno, media);
             } return ranking;
-        } catch(SQLException sqle){
-            sqle.printStackTrace();
+        } catch(SQLException | ClassNotFoundException e){
+            e.printStackTrace();
         } return null;
     }
 
@@ -55,8 +55,8 @@ public class DashboardDAO {
         ){
 //            Inserindo os valores nos objetos
             if (rs.next()) return rs.getInt("count");
-        } catch(SQLException sqle){
-            sqle.printStackTrace();
+        } catch(SQLException | ClassNotFoundException e){
+            e.printStackTrace();
         } return 0;
     }
 
@@ -77,8 +77,8 @@ public class DashboardDAO {
 
                 mediaCasas.put(casaHogwarts, media);
             } return mediaCasas;
-        } catch(SQLException sqle){
-            sqle.printStackTrace();
+        } catch(SQLException | ClassNotFoundException e){
+            e.printStackTrace();
         } return null;
     }
 
@@ -101,8 +101,8 @@ public class DashboardDAO {
                         rs.getString("observacao")
                 ));
             } return quadroObservacoesList;
-        } catch(SQLException sqle){
-            sqle.printStackTrace();
+        } catch(SQLException | ClassNotFoundException e){
+            e.printStackTrace();
         } return null;
     }
 }
