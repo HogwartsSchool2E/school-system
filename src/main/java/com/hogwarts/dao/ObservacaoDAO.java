@@ -4,8 +4,12 @@ import com.hogwarts.model.banco.Observacao;
 import com.hogwarts.utils.Conexao;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ObservacaoDAO {
+
+    // Método inserir
     public boolean inserirObs(Observacao obs) throws SQLException, ClassNotFoundException {
         Conexao conexao = new Conexao();
         Connection conn = conexao.conectar();
@@ -32,6 +36,7 @@ public class ObservacaoDAO {
         return retorno > 0;
     }
 
+    // Método alterar
     public boolean alterarObs(int id, String obs) throws SQLException, ClassNotFoundException {
         Conexao conexao = new Conexao();
         Connection conn = conexao.conectar();
@@ -50,6 +55,7 @@ public class ObservacaoDAO {
         return retorno > 0;
     }
 
+    // Método deletar
     public boolean deletarObs(String aluno, String disciplina) throws SQLException, ClassNotFoundException {
         Conexao conexao = new Conexao();
         Connection conn = conexao.conectar();
@@ -73,5 +79,37 @@ public class ObservacaoDAO {
             conexao.desconectar(conn);
         }
         return retorno > 0;
+    }
+
+    // Método buscar obs por aluno
+    public List<String[]> buscarPorAluno(String nomeAluno) throws SQLException, ClassNotFoundException {
+        Conexao conexao = new Conexao();
+        Connection conn = conexao.conectar();
+
+        List<String[]> lista = new ArrayList<>();
+
+        try (PreparedStatement pstmt = conn.prepareStatement("SELECT a.NOME, o.OBSERVACAO FROM OBSERVACAO o " +
+                "JOIN ALUNO a ON o.COD_ALUNO = a.MATRICULA " +
+                "WHERE a.NOME = ?")) {
+            pstmt.setString(1, nomeAluno);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while(rs.next()) {
+                String[] linha = new String[2];
+                linha[0] = rs.getString("NOME");
+                linha[1] = rs.getString("OBSERVACAO");
+
+                lista.add(linha);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            conexao.desconectar(conn);
+        }
+
+        return lista;
+
     }
 }
