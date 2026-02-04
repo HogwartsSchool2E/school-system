@@ -31,4 +31,22 @@ public class ObservacaoDAO {
         }
         return retorno > 0;
     }
+
+    public boolean alterarObs(int id, String obs) throws SQLException, ClassNotFoundException {
+        Conexao conexao = new Conexao();
+        Connection conn = conexao.conectar();
+        int retorno = 0;
+        try{
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE OBSERVACAO SET OBSERVACAO = ? WHERE ID = ?");
+            pstmt.setString(1, obs);
+            pstmt.setInt(2, id);
+            retorno = pstmt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        finally {
+            conexao.desconectar(conn);
+        }
+        return retorno > 0;
+    }
 }
