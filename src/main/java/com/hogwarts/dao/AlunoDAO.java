@@ -128,7 +128,8 @@ public class AlunoDAO {
             ResultSet rs = pstmt.executeQuery();
 
             if(rs.next()){
-                retorno = true;
+                retorno = true; // é aluno
+                // false = não é aluno
             }
         }catch (SQLException e){
             e.printStackTrace();
