@@ -115,4 +115,27 @@ public class AlunoDAO {
             e.printStackTrace();
         } return null;
     }
+
+    // Método de login
+    public boolean login(String nome, String senha) throws ClassNotFoundException, SQLException {
+        Conexao conexao = new Conexao();
+        Connection conn = conexao.conectar();
+        boolean retorno = false;
+        try {
+            PreparedStatement pstmt = conn.prepareStatement("SELECT 1 FROM ALUNO WHERE NOME = ? AND SENHA = ?");
+            pstmt.setString(1, nome);
+            pstmt.setString(2, senha);
+            ResultSet rs = pstmt.executeQuery();
+
+            if(rs.next()){
+                retorno = true;
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        finally {
+            conexao.desconectar(conn);
+        }
+        return retorno;
+    }
 }
