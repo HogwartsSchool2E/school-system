@@ -15,7 +15,7 @@ public class AlunoDAO {
         // Criando atributos
         List<Boletim> boletins = new ArrayList<>();
         String sql = """
-                SELECT a.nome as "aluno", d.nome as "disciplina", n.nota_um, n.nota_dois, o.observacao, p.nome as "professor", c.nome as "casa_hogwarts"
+                SELECT a.nome as "aluno", a.matricula, d.nome as "disciplina", d.id, n.nota_um, n.nota_dois, o.observacao, o.id as "ob_id", p.nome as "professor", c.nome as "casa_hogwarts"
                 FROM aluno a
                 JOIN casa_hogwarts c ON a.cod_casa = c.id
                 JOIN disciplina d ON d.id IN (SELECT cod_disciplina FROM nota WHERE cod_aluno = a.matricula)
@@ -45,13 +45,16 @@ public class AlunoDAO {
 
                 // Capturando valores da seleção
                 d.setNome(rs.getString("disciplina"));
+                d.setId(rs.getInt("id"));
 
                 n.setNotaUm(rs.getDouble("nota_um"));
                 n.setNotaDois(rs.getDouble("nota_dois"));
 
                 o.setObservacao(rs.getString("observacao"));
+                o.setId(rs.getInt("ob_id"));
 
                 a.setNome(rs.getString("aluno"));
+                a.setMatricula(rs.getInt("matricula"));
 
                 p.setNome(rs.getString("professor"));
 
@@ -70,7 +73,7 @@ public class AlunoDAO {
         // Criando atributos
         List<Boletim> boletins = new ArrayList<>();
         String sql = """
-                SELECT a.nome as "aluno", d.nome as "disciplina", n.nota_um, n.nota_dois, o.observacao, p.nome as "professor", c.nome as "casa_hogwarts"
+                SELECT a.nome as "aluno", a.matricula, d.nome as "disciplina", d.id, n.nota_um, n.nota_dois, o.observacao, o.id as "ob_id", p.nome as "professor", c.nome as "casa_hogwarts"
                 FROM aluno a
                 JOIN casa_hogwarts c ON a.cod_casa = c.id
                 JOIN disciplina d ON d.id IN (SELECT cod_disciplina FROM nota WHERE cod_aluno = a.matricula)
@@ -96,13 +99,16 @@ public class AlunoDAO {
 
                 // Capturando valores da seleção
                 d.setNome(rs.getString("disciplina"));
+                d.setId(rs.getInt("id"));
 
                 n.setNotaUm(rs.getDouble("nota_um"));
                 n.setNotaDois(rs.getDouble("nota_dois"));
 
                 o.setObservacao(rs.getString("observacao"));
+                o.setId(rs.getInt("ob_id"));
 
                 a.setNome(rs.getString("aluno"));
+                a.setMatricula(rs.getInt("matricula"));
 
                 p.setNome(rs.getString("professor"));
 

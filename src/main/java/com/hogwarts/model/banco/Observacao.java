@@ -10,8 +10,7 @@ public class Observacao {
 //    Construtor
     public Observacao() {}
 
-    public Observacao(int id, String observacao, Aluno aluno, Disciplina disciplina) {
-        this.id = id;
+    public Observacao(String observacao, Aluno aluno, Disciplina disciplina) {
         this.observacao = observacao;
         this.aluno = aluno;
         this.disciplina = disciplina;
