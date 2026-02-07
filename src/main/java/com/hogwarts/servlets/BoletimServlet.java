@@ -20,7 +20,7 @@ public class BoletimServlet extends HttpServlet {
         if ("todos".equals(tipoBoletim)){
             req.setAttribute("boletins", new AlunoDAO().gerarBoletimTodos());
             req.getRequestDispatcher("WEB-INF/boletim-todos.jsp").forward(req, resp);
-        } else {
+        } else if ("individual".equals(tipoBoletim)){
 //            Captura input da matrícula no modal
             try {
                 int matricula = Integer.parseInt(req.getParameter("matricula"));
@@ -32,6 +32,9 @@ public class BoletimServlet extends HttpServlet {
                 req.setAttribute("mensagemErro", "Digite apenas números.");
                 req.getRequestDispatcher("WEB-INF/pagina-erro.jsp").forward(req, resp);
             }
+        } else {
+            req.setAttribute("boletins", new AlunoDAO().gerarBoletimTodos());
+            req.getRequestDispatcher("WEB-INF/cadastrar-observacao.jsp").forward(req, resp);
         }
     }
 }
