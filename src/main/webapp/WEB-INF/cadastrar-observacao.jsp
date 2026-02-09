@@ -96,7 +96,7 @@
                                 <input type="hidden" name="nome-aluno" value="<%=b.getAluno().getNome()%>">
                                 <input type="hidden" name="nome-disciplina" value="<%=b.getDisciplina().getNome()%>">
 
-                                <button type="submit" name="acao" value="escluir">Sim</button>
+                                <button type="submit" name="acao" value="excluir">Sim</button>
                                 <button type="button" class="fecha-modal" data-modal="modal-exclui-<%=id%>">Não</button>
                             </form>
                         </dialog>

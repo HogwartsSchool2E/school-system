@@ -6,17 +6,15 @@ public class Professor {
     private String nome;
     private String usuario;
     private String senha;
-    private Disciplina disciplina;
 
 //    Construtor
     public Professor() {}
 
-    public Professor(int id, String nome, String usuario, String senha, Disciplina disciplina) {
+    public Professor(int id, String nome, String usuario, String senha) {
         this.id = id;
         this.nome = nome;
         this.usuario = usuario;
         this.senha = senha;
-        this.disciplina = disciplina;
     }
 
 //    Getters e Setters
@@ -50,13 +48,5 @@ public class Professor {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public Disciplina getDisciplina() {
-        return disciplina;
-    }
-
-    public void setDisciplina(Disciplina disciplina) {
-        this.disciplina = disciplina;
     }
 }

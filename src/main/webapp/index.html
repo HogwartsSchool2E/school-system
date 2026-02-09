@@ -36,6 +36,26 @@
             </form>
         </dialog>
     </div>
+
+    <div class="modal">
+        <button type="button" class="abre-modal" data-modal="modal-2">
+            Área do administrador
+        </button>
+
+        <dialog id="modal-2">
+            <button type="button" class="fecha-modal" data-modal="modal-2">x</button>
+
+            <form action="admin-servlet" method="post">
+                <label for="email">Digite o email de administrador</label>
+                <input type="email" name="email" id="email" autocomplete="on" maxlength="60" required>
+
+                <label for="senha">Digite a senha de administrador</label>
+                <input type="password" name="senha" id="senha" autocomplete="on" required>
+
+                <button type="submit">Enviar dados</button>
+            </form>
+        </dialog>
+    </div>
 </main>
 
 <script src="js/script.js"></script>

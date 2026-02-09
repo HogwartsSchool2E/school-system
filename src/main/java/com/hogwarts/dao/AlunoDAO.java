@@ -3,24 +3,126 @@ package com.hogwarts.dao;
 import com.hogwarts.model.*;
 import com.hogwarts.model.banco.*;
 import com.hogwarts.utils.Conexao;
+import com.hogwarts.utils.Hash;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AlunoDAO {
+//    Método de inserir aluno em todas as disciplinas
+    public void vincularDisciplinas(int matriculaAluno) throws SQLException, ClassNotFoundException{
+        String sqlSelect = "SELECT id FROM disciplina ORDER BY 1";
+        String sqlInsert = "INSERT INTO nota (cod_aluno, cod_disciplina, nota_um, nota_dois) VALUES (?, ?, ?, ?)";
+
+        try(Connection conn = Conexao.conectar();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(sqlSelect);
+
+        PreparedStatement pstmt = conn.prepareStatement(sqlInsert)){
+            while (rs.next()){
+                pstmt.setInt(1, matriculaAluno);
+                pstmt.setInt(2, rs.getInt("id"));
+                pstmt.setDouble(3, 0.0);
+                pstmt.setDouble(4, 0.0);
+
+                pstmt.executeUpdate();
+            }
+        }
+    }
+
+//    Método de inserir aluno
+    public boolean inserirAluno(Aluno aluno) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
+        String sql = "INSERT INTO aluno (NOME, CPF, EMAIL, SENHA, COD_CASA) VALUES (?, ?, ?, ?, ?) RETURNING matricula;";
+
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql)
+        ){
+            pstmt.setString(1, aluno.getNome());
+            pstmt.setString(2, aluno.getCpf());
+            pstmt.setString(3, aluno.getEmail());
+            pstmt.setString(4, Hash.hashSenha(aluno.getSenha()));
+            pstmt.setInt(5, aluno.getCasaHogwarts().getId());
+
+            try (ResultSet rs = pstmt.executeQuery()){
+                if (rs.next()){
+                    vincularDisciplinas(rs.getInt("matricula"));
+                    return true;
+                } return false;
+            }
+        }
+    }
+
+//    Método de atualizar alunos
+    public boolean atualizarAluno(Aluno aluno) throws SQLException, ClassNotFoundException{
+        String sql = "UPDATE ALUNO SET EMAIL = ? WHERE MATRICULA = ?";
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setString(1, aluno.getEmail());
+            pstmt.setInt(2, aluno.getMatricula());
+
+            return pstmt.executeUpdate() > 0;
+        }
+    }
+
+//    Método de excluir alunos
+    public boolean excluirAluno(int matricula) throws SQLException, ClassNotFoundException{
+        String sql = """
+                      DELETE FROM nota WHERE cod_aluno = ?;
+                      DELETE FROM observacao WHERE cod_aluno = ?;
+                      DELETE FROM aluno WHERE matricula = ?;
+                     """;
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setInt(1, matricula);
+            pstmt.setInt(2, matricula);
+            pstmt.setInt(3, matricula);
+
+            return pstmt.executeUpdate() > 0;
+        }
+    }
+
+//    Método de buscar todos os alunos
+    public List<Aluno> buscarAlunos() throws SQLException, ClassNotFoundException{
+        List<Aluno> alunos = new ArrayList<>();
+        String sql = """
+                SELECT a.matricula, a.nome as "aluno", a.cpf, a.email, c.nome as "casa_hogwarts"
+                FROM aluno a
+                JOIN casa_hogwarts c ON c.id = a.cod_casa;
+                """;
+
+        try(Connection conn = Conexao.conectar();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(sql)){
+            while (rs.next()){
+                Aluno a = new Aluno();
+                CasaHogwarts c = new CasaHogwarts();
+
+                c.setNome(rs.getString("casa_hogwarts"));
+
+                a.setMatricula(rs.getInt("matricula"));
+                a.setNome(rs.getString("aluno"));
+                a.setCpf(rs.getString("cpf"));
+                a.setEmail(rs.getString("email"));
+                a.setCasaHogwarts(c);
+
+                alunos.add(a);
+            } return alunos;
+        }
+    }
 
 //    Método de geração de boletim de um aluno
     public List<Boletim> gerarBoletimIndividual(int matricula){
         // Criando atributos
         List<Boletim> boletins = new ArrayList<>();
         String sql = """
-                SELECT a.nome as "aluno", a.matricula, d.nome as "disciplina", d.id, n.nota_um, n.nota_dois, o.observacao, o.id as "ob_id", p.nome as "professor", c.nome as "casa_hogwarts"
+                SELECT a.nome as "aluno", a.email, a.matricula, d.nome as "disciplina", d.id, n.nota_um, n.nota_dois, o.observacao, o.id as "ob_id", p.nome as "professor", c.nome as "casa_hogwarts"
                 FROM aluno a
                 JOIN casa_hogwarts c ON a.cod_casa = c.id
                 JOIN disciplina d ON d.id IN (SELECT cod_disciplina FROM nota WHERE cod_aluno = a.matricula)
                 LEFT JOIN nota n ON n.cod_aluno = a.matricula AND n.cod_disciplina = d.id
-                JOIN professor p ON p.cod_disciplina = d.id
+                JOIN professor p ON p.id = d.cod_professor
                 LEFT JOIN observacao o ON o.cod_aluno = a.matricula AND d.id = o.cod_disciplina
                 WHERE a.matricula = ?
                 ORDER BY a.nome;
@@ -54,6 +156,7 @@ public class AlunoDAO {
                 o.setId(rs.getInt("ob_id"));
 
                 a.setNome(rs.getString("aluno"));
+                a.setEmail(rs.getString("email"));
                 a.setMatricula(rs.getInt("matricula"));
 
                 p.setNome(rs.getString("professor"));
@@ -73,12 +176,12 @@ public class AlunoDAO {
         // Criando atributos
         List<Boletim> boletins = new ArrayList<>();
         String sql = """
-                SELECT a.nome as "aluno", a.matricula, d.nome as "disciplina", d.id, n.nota_um, n.nota_dois, o.observacao, o.id as "ob_id", p.nome as "professor", c.nome as "casa_hogwarts"
+                SELECT a.nome as "aluno", a.email, a.matricula, d.nome as "disciplina", d.id, n.nota_um, n.nota_dois, o.observacao, o.id as "ob_id", p.nome as "professor", c.nome as "casa_hogwarts"
                 FROM aluno a
                 JOIN casa_hogwarts c ON a.cod_casa = c.id
                 JOIN disciplina d ON d.id IN (SELECT cod_disciplina FROM nota WHERE cod_aluno = a.matricula)
                 LEFT JOIN nota n ON n.cod_aluno = a.matricula AND n.cod_disciplina = d.id
-                JOIN professor p ON p.cod_disciplina = d.id
+                JOIN professor p ON p.id = d.cod_professor
                 LEFT JOIN observacao o ON o.cod_aluno = a.matricula AND d.id = o.cod_disciplina
                 ORDER BY a.nome;""";
 
@@ -108,6 +211,7 @@ public class AlunoDAO {
                 o.setId(rs.getInt("ob_id"));
 
                 a.setNome(rs.getString("aluno"));
+                a.setEmail(rs.getString("email"));
                 a.setMatricula(rs.getInt("matricula"));
 
                 p.setNome(rs.getString("professor"));
