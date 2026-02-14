@@ -1,6 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.hogwarts.model.banco.Disciplina" %>
-<%@ page import="com.hogwarts.utils.Formatador" %><%--
+<%@ page import="com.hogwarts.utils.Formatador" %>
+<%@ page import="java.text.Normalizer" %><%--
   Created by IntelliJ IDEA.
   User: daviramos-ieg
   Date: 07/02/2026
@@ -44,7 +45,7 @@
                     <%String professorAtual = d.getProfessor().getNome();%>
 
                     <p>
-                        Disciplina: <em><%=d.getNome()%></em><br>
+                        Disciplina: <em><%=Formatador.mostrar(d.getNome())%></em><br>
                         Antigo professor: <em><%=professorAtual%></em>
                     </p>
 

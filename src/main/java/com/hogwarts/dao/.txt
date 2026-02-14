@@ -1,0 +1,3 @@
+EXCUIR PROFESSOR
+1. se for gestor de casa, mudar
+2. se tiver disciplina

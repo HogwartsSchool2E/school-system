@@ -7,11 +7,12 @@
   Time: 02:06
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 
 <%--Capturando valores do servlet--%>
 <%
     List<Boletim> boletim = (List<Boletim>) request.getAttribute("boletim");
+    String disciplina = (String) request.getAttribute("disciplina");
 %>
 
 <html>
@@ -22,8 +23,10 @@
         <main>
             <h1><%=boletim.getFirst().getAluno().getNome()%></h1>
             <h2><%=boletim.getFirst().getCasaHogwarts().getNome()%></h2>
+            <%=disciplina%>
 
-            <%for (Boletim b: boletim) {%>
+            <%for (Boletim b: boletim) {
+                if (b.getDisciplina().getNome().equals(disciplina)){%>
             <strong>Professor: </strong> <%=b.getProfessor().getNome()%> <br>
             <strong>Disciplina: </strong> <%=b.getDisciplina().getNome()%> <br>
             <strong>Nota 1: </strong> <%=b.getNota1()%> <br>
@@ -31,7 +34,7 @@
             <strong>Média: </strong> <%=b.getMedia()%> <br>
             <strong>Observação: </strong> <%=Formatador.mostrar(b.getObservacao().getObservacao())%> <br>
             <strong>Situação: </strong> <%=b.getSituacao()%> <br> <br>
-            <%}%>
+            <%}}%>
         </main>
     </body>
 </html>
