@@ -8,8 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 
 @WebServlet(name = "BoletimServlet", value = "/boletim-servlet")
 public class BoletimServlet extends HttpServlet {

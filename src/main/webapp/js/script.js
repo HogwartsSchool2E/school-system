@@ -23,7 +23,11 @@ fechaButtons.forEach(button => {
 document.querySelectorAll('.nota-select').forEach((select) => {
     select.addEventListener('change', (x) => {
         const dialog = x.target.closest('dialog')
+
         const antiga = dialog?.querySelector('.antiga-nota')
         if (antiga) antiga.textContent = x.target.value
+
+        const hidden = dialog?.querySelector('.eh-n1')
+        if (hidden) hidden.value = x.target.selectedOptions[0].dataset.n1
     })
 })
