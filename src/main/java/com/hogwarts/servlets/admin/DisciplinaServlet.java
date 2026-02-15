@@ -75,8 +75,11 @@ public class DisciplinaServlet extends HttpServlet {
         new DisciplinaDAO().inserirDisciplina(new Disciplina(nome, p));
     }
 
-    private void atualizarDisc(HttpServletRequest req){
+    private void atualizarDisc(HttpServletRequest req) throws SQLException, ClassNotFoundException {
+        int idDisciplina = Integer.parseInt(req.getParameter("id-disc"));
+        int idProfNovo = Integer.parseInt(req.getParameter("id-prof"));
 
+        new DisciplinaDAO().atualizarDisciplina(idDisciplina, idProfNovo);
     }
 
     private void excluirProf(HttpServletRequest req) throws SQLException, ClassNotFoundException{

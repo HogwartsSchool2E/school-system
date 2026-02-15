@@ -1,4 +1,6 @@
-<%@ page import="com.hogwarts.utils.Formatador" %><%--
+<%@ page import="com.hogwarts.utils.Formatador" %>
+<%@ page import="com.hogwarts.model.banco.Aluno" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: daviramos-ieg
   Date: 10/02/2026
@@ -8,8 +10,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 
 <%
+    List<Aluno> alunos = (List<Aluno>) session.getAttribute("alunos");
     String nomeProf = (String) session.getAttribute("nomeProf");
     String disciplina = (String) session.getAttribute("disciplina");
+    List<String> disciplinaList = (List<String>) session.getAttribute("disciplinaList");
 
     if (nomeProf == null) nomeProf = "Jones";
 %>
@@ -17,11 +21,52 @@
 <html>
 <head>
     <title>Title</title>
+
+    <style>
+        .astext {
+            color: blue;
+            border:none;
+            margin:0;
+            padding:0;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <main>
+    <form action="professor-servlet" id="f" method="get"></form>
+    
     <h1>Olá, <%=nomeProf%>. Bem-vindo!</h1>
     <h2>Professor de <%=Formatador.mostrar(disciplina)%></h2>
+    <p>É professor de outra matéria?</p>
+    <div class="modal">
+        <button type="button" name="tipo" class="abre-modal astext" data-modal="modal-1">
+            Clique aqui para ver suas disciplinas
+        </button>
+
+        <dialog id="modal-1">
+            <button type="button" class="fecha-modal" data-modal="modal-1">x</button>
+
+            <%if (disciplinaList.isEmpty()){%>
+            <p><strong>Você não tem nenhuma disciplina vigente.</strong></p>
+            <%} else if (disciplinaList.size() == 1){%>
+            <p><strong>Sua única disciplina vigente é <%=disciplina%></strong></p>
+
+            <%} else {%>
+            <p>Você tem as seguintes disciplinas:</p>
+            <p>Clique nelas para ser redirecionado para as páginas</p>
+
+            <form action="professor-servlet" method="get">
+
+                <input type="hidden" name="nome" value="<%=nomeProf%>">
+
+                <%for (String d : disciplinaList){%>
+                <input type="submit" name="disciplina" value="<%=d%>">
+                <%}%>
+            </form>
+            <%}%>
+        </dialog>
+    </div>
     <p>O que você quer fazer hoje?</p>
 
 
@@ -33,16 +78,43 @@
     </form>
 
     <div class="modal">
-        <button type="button" name="tipo" class="abre-modal" data-modal="modal-1">
+        <button type="button" name="tipo" class="abre-modal" data-modal="modal-2">
             Boletim individual
         </button>
 
-        <dialog id="modal-1">
-            <button type="button" class="fecha-modal" data-modal="modal-1">x</button>
+        <dialog id="modal-2">
+            <button type="button" class="fecha-modal" data-modal="modal-2">x</button>
 
             <form action="boletim-servlet" method="get">
-                <label for="matricula">Digite a matrícula do aluno:</label>
-                <input type="number" name="matricula" id="matricula" autocomplete="on" min="1000" required>
+                <div>
+                    <p>Escolha uma forma de seleção</p>
+
+                    <label>
+                        <input type="radio" name="modo" id="digitar" value="digitar" checked>
+                        Digite a matrícula
+                    </label>
+
+                    <label>
+                        <input type="radio" name="modo" id="escolher" value="escolher">
+                        Escolha o aluno
+                    </label>
+
+                </div>
+
+                <section id="digitar-section">
+                    <label for="matricula-digitar">Digite a matrícula do aluno:</label>
+                    <input type="number" name="matricula" id="matricula-digitar" autocomplete="on" min="10000" required>
+                </section>
+
+                <section id="escolher-section" style="display: none;">
+                    <label for="matricula-select">Selecione o aluno:</label>
+                    <select name="matricula" id="matricula-select" required disabled>
+                        <option value="">Selecione</option>
+                        <%for (Aluno a : alunos){%>
+                        <option value="<%=a.getMatricula()%>"><%=a.getNome()%> - <%=a.getMatricula()%></option>
+                        <%}%>
+                    </select>
+                </section>
 
                 <input type="hidden" name="disciplina" value="<%=disciplina%>">
 
@@ -51,7 +123,7 @@
         </dialog>
     </div>
 </main>
-<script src="<%=request.getContextPath()%>/js/script.js"></script>
+<script src="<%=request.getContextPath()%>/js/script.js" defer></script>
 
 </body>
 </html>

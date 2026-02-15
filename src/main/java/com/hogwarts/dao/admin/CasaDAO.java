@@ -15,7 +15,7 @@ public class CasaDAO {
         String sql = """
                 SELECT c.ID, c.NOME, c.PONTUACAO, p.NOME as "PROFESSOR", p.ID as "PROF_ID"
                 FROM CASA_HOGWARTS c
-                JOIN PROFESSOR p ON p.id = c.COD_PROFESSOR
+                LEFT JOIN PROFESSOR p ON p.id = c.COD_PROFESSOR
                 """;
 
         try(Connection conn = Conexao.conectar();
@@ -39,13 +39,25 @@ public class CasaDAO {
     }
 
 //    Método de atualizar professor gestor da casa de hogwarts
-    public boolean atualizarCasa(int idAntigo, int idSubstituto, int idCasa) throws SQLException, ClassNotFoundException{
-        String sql = "UPDATE CASA_HOGWARTS SET COD_PROFESSOR = ? WHERE COD_PROFESSOR = ? AND ID = ?";
+    public boolean atualizarCasa(int idSubstituto, int idCasa) throws SQLException, ClassNotFoundException{
+        String sql = "UPDATE CASA_HOGWARTS SET COD_PROFESSOR = ? WHERE ID = ?";
         try (Connection conn = Conexao.conectar();
              PreparedStatement pstmt = conn.prepareStatement(sql)){
             pstmt.setInt(1, idSubstituto);
-            pstmt.setInt(2, idAntigo);
-            pstmt.setInt(3, idCasa);
+            pstmt.setInt(2, idCasa);
+
+            return pstmt.executeUpdate() > 0;
+        }
+    }
+
+    public boolean atualizarPontos(int pontuacaoAntiga, int pontuacaoAdicionar, int idCasa) throws SQLException, ClassNotFoundException{
+        String sql = "UPDATE CASA_HOGWARTS SET PONTUACAO = ? WHERE ID = ?";
+        int pontuacao = pontuacaoAdicionar + pontuacaoAntiga;
+
+        try (Connection conn = Conexao.conectar();
+        PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setInt(1, pontuacao);
+            pstmt.setInt(2, idCasa);
 
             return pstmt.executeUpdate() > 0;
         }

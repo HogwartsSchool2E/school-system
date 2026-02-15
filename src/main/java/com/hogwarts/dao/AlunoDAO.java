@@ -33,7 +33,7 @@ public class AlunoDAO {
     }
 
 //    Método de inserir aluno
-    public boolean inserirAluno(Aluno aluno) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
+    public void inserirAluno(Aluno aluno) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
         String sql = "INSERT INTO aluno (NOME, CPF, EMAIL, SENHA, COD_CASA) VALUES (?, ?, ?, ?, ?) RETURNING matricula;";
 
         try (Connection conn = Conexao.conectar();
@@ -48,8 +48,7 @@ public class AlunoDAO {
             try (ResultSet rs = pstmt.executeQuery()){
                 if (rs.next()){
                     vincularDisciplinas(rs.getInt("matricula"));
-                    return true;
-                } return false;
+                }
             }
         }
     }
@@ -89,7 +88,8 @@ public class AlunoDAO {
         String sql = """
                 SELECT a.matricula, a.nome as "aluno", a.cpf, a.email, c.nome as "casa_hogwarts"
                 FROM aluno a
-                JOIN casa_hogwarts c ON c.id = a.cod_casa;
+                JOIN casa_hogwarts c ON c.id = a.cod_casa
+                ORDER BY a.matricula;
                 """;
 
         try(Connection conn = Conexao.conectar();
@@ -113,9 +113,8 @@ public class AlunoDAO {
     }
 
 //    Método de geração de boletim de um aluno
-    public List<Boletim> gerarBoletimIndividual(int matricula){
+    public Boletim gerarBoletimIndividual(int matricula, String disc){
         // Criando atributos
-        List<Boletim> boletins = new ArrayList<>();
         String sql = """
                 SELECT a.nome as "aluno", a.email, a.matricula, d.nome as "disciplina", d.id, n.nota_um, n.nota_dois, o.observacao, o.id as "ob_id", p.nome as "professor", c.nome as "casa_hogwarts"
                 FROM aluno a
@@ -124,7 +123,7 @@ public class AlunoDAO {
                 LEFT JOIN nota n ON n.cod_aluno = a.matricula AND n.cod_disciplina = d.id
                 JOIN professor p ON p.id = d.cod_professor
                 LEFT JOIN observacao o ON o.cod_aluno = a.matricula AND d.id = o.cod_disciplina
-                WHERE a.matricula = ?
+                WHERE a.matricula = ? AND d.id = (SELECT ID FROM disciplina WHERE NOME = ?)
                 ORDER BY a.nome;
                 """;
 
@@ -134,10 +133,11 @@ public class AlunoDAO {
         ) {
             // Inserindo os atributos e recebendo o SELECT
             pstmt.setInt(1, matricula);
+            pstmt.setString(2, disc);
             ResultSet rs = pstmt.executeQuery();
 
             // Inserindo os valores nos objetos
-            while (rs.next()){
+            if (rs.next()){
                 Disciplina d = new Disciplina();
                 Nota n = new Nota();
                 Observacao o = new Observacao();
@@ -164,8 +164,8 @@ public class AlunoDAO {
                 c.setNome(rs.getString("casa_hogwarts"));
 
                 // Geração do boletim
-                boletins.add(new Boletim(a, n.getNotaUm(), n.getNotaDois(), o, d, p, c));
-            } return boletins;
+                return new Boletim(a, n.getNotaUm(), n.getNotaDois(), o, d, p, c);
+            }
         } catch (SQLException | ClassNotFoundException e){
             e.printStackTrace();
         } return null;

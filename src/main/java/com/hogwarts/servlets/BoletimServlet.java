@@ -40,14 +40,17 @@ public class BoletimServlet extends HttpServlet {
 
     private void boletimTodos(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         req.setAttribute("boletins", new AlunoDAO().gerarBoletimTodos());
+        req.setAttribute("tipo", "todos");
 
         req.getRequestDispatcher("WEB-INF/prof/boletim-todos.jsp").forward(req, resp);
     }
 
     private void boletimIndividual(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, NumberFormatException{
         int matricula = Integer.parseInt(req.getParameter("matricula"));
+        String disc = req.getParameter("disciplina");
 
-        req.setAttribute("boletim", new AlunoDAO().gerarBoletimIndividual(matricula));
+        req.setAttribute("boletim", new AlunoDAO().gerarBoletimIndividual(matricula, disc));
+        req.setAttribute("tipo", "individual");
 
         req.getRequestDispatcher("WEB-INF/prof/boletim-individual.jsp").forward(req, resp);
     }

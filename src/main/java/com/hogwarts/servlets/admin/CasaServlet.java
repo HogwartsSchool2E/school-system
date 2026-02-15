@@ -16,13 +16,17 @@ public class CasaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            CasaDAO c = new CasaDAO();
+            switch (req.getParameter("acao")){
+                case "atualizar":
+                    atualizarProfessor(req); break;
 
-            int idNovo = Integer.parseInt(req.getParameter("professor-novo-id"));
-            int idAntigo = Integer.parseInt(req.getParameter("professor-antigo-id"));
-            int idCasa = Integer.parseInt(req.getParameter("id-casa"));
+                case "atualizar-ponto":
+                    atualizarPonto(req); break;
 
-            c.atualizarCasa(idAntigo, idNovo, idCasa);
+                default:
+                    req.setAttribute("mensagemErro", "Não foi possível concluir sua solicitação.");
+                    req.getRequestDispatcher("WEB-INF/pagina-erro.jsp").forward(req, resp);
+            }
 
             req.setAttribute("casasHogwarts", new CasaDAO().buscarCasaHogwarts());
             req.setAttribute("professores", new DisciplinaDAO().buscarProfessores());
@@ -40,5 +44,24 @@ public class CasaServlet extends HttpServlet {
             req.setAttribute("mensagemErro", "Houve um erro ao processar as informações, não se preocupe, tente novamente em alguns minutos.");
             req.getRequestDispatcher("WEB-INF/pagina-erro.jsp").forward(req, resp);
         }
+    }
+
+    private void atualizarProfessor(HttpServletRequest req) throws SQLException, ClassNotFoundException {
+        CasaDAO c = new CasaDAO();
+
+        int idNovo = Integer.parseInt(req.getParameter("professor-novo-id"));
+        int idCasa = Integer.parseInt(req.getParameter("id-casa"));
+
+        c.atualizarCasa(idNovo, idCasa);
+    }
+
+    private void atualizarPonto(HttpServletRequest req) throws SQLException, ClassNotFoundException{
+        CasaDAO c = new CasaDAO();
+
+        int pontuacao = Integer.parseInt(req.getParameter("pontuacao"));
+        int pontuacaoAntiga = Integer.parseInt(req.getParameter("pontuacao-antiga"));
+        int idCasa = Integer.parseInt(req.getParameter("id-casa"));
+
+        c.atualizarPontos(pontuacaoAntiga, pontuacao, idCasa);
     }
 }

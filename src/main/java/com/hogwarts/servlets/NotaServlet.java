@@ -18,6 +18,7 @@ public class NotaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp){
         String tipo = req.getParameter("tipo");
+        String matricula = req.getParameter("matricula");
         String discEncaminhar = URLEncoder.encode(req.getParameter("disciplina"), StandardCharsets.UTF_8);
 
         try {
@@ -36,7 +37,8 @@ public class NotaServlet extends HttpServlet {
                     req.getRequestDispatcher("WEB-INF/pagina-erro.jsp").forward(req, resp);
             }
 
-            resp.sendRedirect(req.getContextPath() + "/boletim-servlet?tipo=" + "todos" + "&disciplina=" + discEncaminhar);
+            if (tipo.equals("todos")) resp.sendRedirect(req.getContextPath() + "/boletim-servlet?tipo=todos&disciplina=" + discEncaminhar);
+            else if (tipo.equals("individual")) resp.sendRedirect(req.getContextPath() + "/boletim-servlet?tipo=individual&matricula=" + matricula + "&disciplina=" + discEncaminhar);
         }catch (Exception e){
             e.printStackTrace();
         }

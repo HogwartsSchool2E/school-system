@@ -68,6 +68,7 @@
                         <input type="hidden" name="matricula-aluno" value="<%=b.getAluno().getMatricula()%>">
                         <input type="hidden" name="id-disciplina" value="<%=b.getDisciplina().getId()%>">
                         <input type="hidden" name="eh-n1" value="true">
+                        <input type="hidden" name="tipo" value="todos">
                         <input type="hidden" name="disciplina" value="<%=disciplina%>">
 
                         <button type="submit" name="acao" value="inserir">Enviar dados</button>
@@ -88,6 +89,7 @@
                         <input type="hidden" name="matricula-aluno" value="<%=b.getAluno().getMatricula()%>">
                         <input type="hidden" name="id-disciplina" value="<%=b.getDisciplina().getId()%>">
                         <input type="hidden" name="eh-n1" value="false">
+                        <input type="hidden" name="tipo" value="todos">
                         <input type="hidden" name="disciplina" value="<%=disciplina%>">
 
                         <button type="submit" name="acao" value="inserir">Enviar dados</button>
@@ -110,6 +112,7 @@
                         <input type="hidden" name="matricula-aluno" value="<%=b.getAluno().getMatricula()%>">
                         <input type="hidden" name="id-disciplina" value="<%=b.getDisciplina().getId()%>">
                         <input type="hidden" name="eh-n1" value="true">
+                        <input type="hidden" name="tipo" value="todos">
                         <input type="hidden" name="disciplina" value="<%=disciplina%>">
 
                         <button type="submit" name="acao" value="atualizar">Enviar dados</button>
@@ -129,6 +132,7 @@
                         <input type="hidden" name="matricula-aluno" value="<%=b.getAluno().getMatricula()%>">
                         <input type="hidden" name="id-disciplina" value="<%=b.getDisciplina().getId()%>">
                         <input type="hidden" name="eh-n1" value="true">
+                        <input type="hidden" name="tipo" value="todos">
                         <input type="hidden" name="disciplina" value="<%=disciplina%>">
 
                         <button type="submit" name="acao" value="excluir">Sim</button>
@@ -160,6 +164,7 @@
                         <input type="hidden" name="matricula-aluno" value="<%=b.getAluno().getMatricula()%>">
                         <input type="hidden" name="id-disciplina" value="<%=b.getDisciplina().getId()%>">
                         <input type="hidden" name="eh-n1" class="eh-n1">
+                        <input type="hidden" name="tipo" value="todos">
                         <input type="hidden" name="disciplina" value="<%=disciplina%>">
 
                         <button type="submit" name="acao" value="atualizar">Enviar dados</button>
@@ -186,6 +191,7 @@
                         <input type="hidden" name="matricula-aluno" value="<%=b.getAluno().getMatricula()%>">
                         <input type="hidden" name="id-disciplina" value="<%=b.getDisciplina().getId()%>">
                         <input type="hidden" name="eh-n1" class="eh-n1">
+                        <input type="hidden" name="tipo" value="todos">
                         <input type="hidden" name="disciplina" value="<%=disciplina%>">
 
                         <label for="excluir">Você tem certeza que quer excluir essa nota?</label>
