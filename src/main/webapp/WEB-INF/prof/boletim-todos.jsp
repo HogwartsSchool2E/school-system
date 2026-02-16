@@ -17,186 +17,198 @@
 %>
 
 <html>
-    <head>
-        <title>Title</title>
-    </head>
-    <body>
-        <main>
-        <%if (boletins != null && !boletins.isEmpty()){%>
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>Aluno</th>
-                        <th>Casa</th>
-                        <th>Professor</th>
-                        <th>Disciplina</th>
-                        <th>Nota 1</th>
-                        <th>Nota 2</th>
-                        <th>Média</th>
-                        <th>Observação</th>
-                        <th>Situação</th>
-                        <th colspan="3">Ações</th>
-                    </tr>
-                </thead>
+<head>
+    <title>Title</title>
+</head>
+<body>
+<main>
+    <%if (boletins != null && !boletins.isEmpty()){%>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Aluno</th>
+            <th>Casa</th>
+            <th>Professor</th>
+            <th>Disciplina</th>
+            <th>Nota 1</th>
+            <th>Nota 2</th>
+            <th>Média</th>
+            <th>Observação</th>
+            <th>Situação</th>
+            <th colspan="3">Ações</th>
+        </tr>
+        </thead>
 
-                <%                Random rd = new Random();
-                    for (Boletim b : boletins){
+        <%int i = 0;
+            for (Boletim b : boletins){
                 if (b.getDisciplina().getNome().equals(disciplina)) {
-                    int j = rd.nextInt(0, 9999);
-                    String id = String.valueOf(j);%>
-                <tbody>
-                    <tr>
-                        <td><%=b.getAluno().getNome()%></td>
-                        <td><%=b.getCasaHogwarts().getNome()%></td>
-                        <td><%=b.getProfessor().getNome()%></td>
-                        <td><%=b.getDisciplina().getNome()%></td>
-                        <td><%=b.getNota1()%></td>
-                        <td><%=b.getNota2()%></td>
-                        <td><%=b.getMedia()%></td>
-                        <td><%=mostrar(b.getObservacao().getObservacao())%></td>
-                        <td><%=b.getSituacao()%></td>
+                    String id = String.valueOf(i++);%>
+        <tbody>
+        <tr>
+            <td><%=b.getAluno().getNome()%></td>
+            <td><%=b.getCasaHogwarts().getNome()%></td>
+            <td><%=b.getProfessor().getNome()%></td>
+            <td><%=b.getDisciplina().getNome()%></td>
+            <td><%=b.getNota1() == 0 ? "--" : ("<strong>" + b.getNota1() + "</strong>") %></td>
+            <td><%=b.getNota2() == 0 ? "--" : ("<strong>" + b.getNota2() + "</strong>") %></td>
+            <td><%=b.getMedia() == 0 ? "--" : ("<strong>" + b.getMedia() + "</strong>")%></td>
+            <td><%=mostrar(b.getObservacao().getObservacao())%></td>
+            <td><%=b.getSituacao()%></td>
 
-                        <%if (b.getNota1() == 0) {%>
-                        <td colspan="3">
-                            <button type="button" name="" class="abre-modal" data-modal="modal-add-semnotas-<%=id%>">Adicionar</button>
+            <%if (b.getNota1() == 0) {%>
+            <td colspan="3">
+                <button type="button" name="" class="abre-modal" data-modal="modal-add-semnotas-<%=id%>">Adicionar</button>
 
-                            <dialog id="modal-add-semnotas-<%=id%>">
-                                <button type="button" class="fecha-modal" data-modal="modal-add-semnotas-<%=id%>">x</button>
-                                <form action="" method="get">
-                                    <label for="nota1-semnotas">Digite a nota:</label>
-                                    <input type="number" name="nota1" id="nota1-semnotas" step="0.01" min="0.01" max="10" required>
+                <dialog id="modal-add-semnotas-<%=id%>">
+                    <button type="button" class="fecha-modal" data-modal="modal-add-semnotas-<%=id%>">x</button>
+                    <form action="nota-servlet" method="post">
+                        <label for="nota1-semnotas">Digite a nota:</label>
+                        <input type="number" name="nota" id="nota1-semnotas" step="0.01" min="0.01" max="10" required>
 
-                                    <input type="hidden" name="matricula-aluno" value="<%=b.getAluno().getMatricula()%>">
-                                    <input type="hidden" name="id-disciplina" value="<%=b.getDisciplina().getId()%>">
-                                    <input type="hidden" name="disciplina" value="<%=disciplina%>">
+                        <input type="hidden" name="matricula-aluno" value="<%=b.getAluno().getMatricula()%>">
+                        <input type="hidden" name="id-disciplina" value="<%=b.getDisciplina().getId()%>">
+                        <input type="hidden" name="eh-n1" value="true">
+                        <input type="hidden" name="tipo" value="todos">
+                        <input type="hidden" name="disciplina" value="<%=disciplina%>">
 
-                                    <button type="submit" name="acao" value="adicionar-semnotas">Enviar dados</button>
-                                </form>
-                            </dialog>
-                        </td>
+                        <button type="submit" name="acao" value="inserir">Enviar dados</button>
+                    </form>
+                </dialog>
+            </td>
 
-                        <%} else if (b.getNota2() == 0) {%>
-                        <td class="modal">
-                        <button type="button" name="" class="abre-modal" data-modal="modal-add-umanota-<%=id%>">Adicionar</button>
+            <%} else if (b.getNota2() == 0) {%>
+            <td class="modal">
+                <button type="button" name="" class="abre-modal" data-modal="modal-add-umanota-<%=id%>">Adicionar</button>
 
-                        <dialog id="modal-add-umanota-<%=id%>">
-                            <button type="button" class="fecha-modal" data-modal="modal-add-umanota-<%=id%>">x</button>
-                            <form action="" method="get">
-                                <label for="nota2-semnotas">Digite a nota:</label>
-                                <input type="number" name="nota2" id="nota2-semnotas" step="0.01" min="0.01" max="10" required>
+                <dialog id="modal-add-umanota-<%=id%>">
+                    <button type="button" class="fecha-modal" data-modal="modal-add-umanota-<%=id%>">x</button>
+                    <form action="nota-servlet" method="post">
+                        <label for="nota2-semnotas">Digite a nota:</label>
+                        <input type="number" name="nota" id="nota2-semnotas" step="0.01" min="0.01" max="10" required>
 
-                                <input type="hidden" name="matricula-aluno" value="<%=b.getAluno().getMatricula()%>">
-                                <input type="hidden" name="id-disciplina" value="<%=b.getDisciplina().getId()%>">
-                                <input type="hidden" name="disciplina" value="<%=disciplina%>">
+                        <input type="hidden" name="matricula-aluno" value="<%=b.getAluno().getMatricula()%>">
+                        <input type="hidden" name="id-disciplina" value="<%=b.getDisciplina().getId()%>">
+                        <input type="hidden" name="eh-n1" value="false">
+                        <input type="hidden" name="tipo" value="todos">
+                        <input type="hidden" name="disciplina" value="<%=disciplina%>">
 
-                                <button type="submit" name="acao" value="adicionar">Enviar dados</button>
-                            </form>
-                        </dialog>
-                        </td>
+                        <button type="submit" name="acao" value="inserir">Enviar dados</button>
+                    </form>
+                </dialog>
+            </td>
 
-                        <td class="modal">
-                            <button type="button" name="" class="abre-modal" data-modal="modal-edita-umanota-<%=id%>">Editar</button>
+            <td class="modal">
+                <button type="button" name="" class="abre-modal" data-modal="modal-edita-umanota-<%=id%>">Editar</button>
 
-                            <dialog id="modal-edita-umanota-<%=id%>">
-                                <button type="button" class="fecha-modal" data-modal="modal-edita-umanota-<%=id%>">x</button>
+                <dialog id="modal-edita-umanota-<%=id%>">
+                    <button type="button" class="fecha-modal" data-modal="modal-edita-umanota-<%=id%>">x</button>
 
-                                <p>Antiga nota: <em><%=b.getNota1()%></em></p>
+                    <p>Antiga nota: <em><%=b.getNota1()%></em></p>
 
-                                <form action="" method="get">
-                                    <label for="nota1-umanota">Digite a nova nota:</label>
-                                    <input type="number" name="nota1" id="nota1-umanota" step="0.01" min="0.01" max="10" required>
+                    <form action="nota-servlet" method="post">
+                        <label for="nota-edita">Digite a nova nota:</label>
+                        <input type="number" name="nota-edita" id="nota-umanota" step="0.01" min="0.01" max="10" required>
 
-                                    <input type="hidden" name="matricula-aluno" value="<%=b.getAluno().getMatricula()%>">
-                                    <input type="hidden" name="id-disciplina" value="<%=b.getDisciplina().getId()%>">
-                                    <input type="hidden" name="disciplina" value="<%=disciplina%>">
+                        <input type="hidden" name="matricula-aluno" value="<%=b.getAluno().getMatricula()%>">
+                        <input type="hidden" name="id-disciplina" value="<%=b.getDisciplina().getId()%>">
+                        <input type="hidden" name="eh-n1" value="true">
+                        <input type="hidden" name="tipo" value="todos">
+                        <input type="hidden" name="disciplina" value="<%=disciplina%>">
 
-                                    <button type="submit" name="acao" value="editar">Enviar dados</button>
-                                </form>
-                            </dialog>
-                        </td>
+                        <button type="submit" name="acao" value="atualizar">Enviar dados</button>
+                    </form>
+                </dialog>
+            </td>
 
-                        <td class="modal">
-                            <button type="button" name="" class="abre-modal" data-modal="modal-exclui-umanota-<%=id%>">Excluir</button>
+            <td class="modal">
+                <button type="button" name="" class="abre-modal" data-modal="modal-exclui-umanota-<%=id%>">Excluir</button>
 
-                            <dialog id="modal-exclui-umanota-<%=id%>">
-                                <button type="button" class="fecha-modal" data-modal="modal-exclui-umanota-<%=id%>">x</button>
-                                <form action="" method="get">
-                                    <label for="excluir">Você tem certeza que quer excluir essa nota?</label>
+                <dialog id="modal-exclui-umanota-<%=id%>">
+                    <button type="button" class="fecha-modal" data-modal="modal-exclui-umanota-<%=id%>">x</button>
+                    <form action="nota-servlet" method="post">
+                        <p>Nota a ser excluída: <em><%=b.getNota1()%></em></p>
+                        <label for="excluir">Você tem certeza que quer excluir essa nota?</label>
 
-                                    <input type="hidden" name="matricula-aluno" value="<%=b.getAluno().getMatricula()%>">
-                                    <input type="hidden" name="id-disciplina" value="<%=b.getDisciplina().getId()%>">
-                                    <input type="hidden" name="disciplina" value="<%=disciplina%>">
+                        <input type="hidden" name="matricula-aluno" value="<%=b.getAluno().getMatricula()%>">
+                        <input type="hidden" name="id-disciplina" value="<%=b.getDisciplina().getId()%>">
+                        <input type="hidden" name="eh-n1" value="true">
+                        <input type="hidden" name="tipo" value="todos">
+                        <input type="hidden" name="disciplina" value="<%=disciplina%>">
 
-                                    <button type="submit" name="acao" value="excluir">Sim</button>
-                                    <button type="button" class="fecha-modal" data-modal="modal-exclui-umanota-<%=id%>">Não</button>
-                                </form>
-                            </dialog>
-                        </td>
+                        <button type="submit" name="acao" value="excluir">Sim</button>
+                        <button type="button" class="fecha-modal" data-modal="modal-exclui-umanota-<%=id%>">Não</button>
+                    </form>
+                </dialog>
+            </td>
 
-                        <%} else {%>
-                        <td class="modal" colspan="2">
-                            <button type="button" name="" class="abre-modal" data-modal="modal-edita-duasnotas-<%=id%>">Editar</button>
+            <%} else {%>
+            <td class="modal" colspan="2">
+                <button type="button" name="" class="abre-modal" data-modal="modal-edita-duasnotas-<%=id%>">Editar</button>
 
-                            <dialog id="modal-edita-duasnotas-<%=id%>">
-                                <button type="button" class="fecha-modal" data-modal="modal-edita-duasnotas-<%=id%>">x</button>
+                <dialog id="modal-edita-duasnotas-<%=id%>">
+                    <button type="button" class="fecha-modal" data-modal="modal-edita-duasnotas-<%=id%>">x</button>
 
-                                <p>Antiga nota: <em class="antiga-nota"></em></p>
+                    <p>Antiga nota: <em class="antiga-nota"></em></p>
 
-                                <form action="" method="get">
-                                    <label for="nota">Selecione uma nota para editar:</label>
-                                    <select name="nota" class="nota-select" required>
-                                        <option value="">Selecione</option>
-                                        <option value="<%=b.getNota1()%>">Nota 1</option>
-                                        <option value="<%=b.getNota2()%>">Nota 2</option>
-                                    </select>
+                    <form action="nota-servlet" method="post">
+                        <label for="nota">Selecione uma nota para editar:</label>
+                        <select name="nota" class="nota-select" required>
+                            <option value="">Selecione</option>
+                            <option value="<%=b.getNota1()%>" data-n1="true">Nota 1</option>
+                            <option value="<%=b.getNota2()%>" data-n1="false">Nota 2</option>
+                        </select>
 
-                                    <label for="nota1-umanota">Digite a nova nota:</label>
-                                    <input type="number" name="notax" id="notax-duasnota" step="0.01" min="0.01" max="10" required>
+                        <label for="nota-edita">Digite a nova nota:</label>
+                        <input type="number" name="nota-edita" id="nota-edita" step="0.01" min="0.01" max="10" required>
 
-                                    <input type="hidden" name="matricula-aluno" value="<%=b.getAluno().getMatricula()%>">
-                                    <input type="hidden" name="id-disciplina" value="<%=b.getDisciplina().getId()%>">
-                                    <input type="hidden" name="disciplina" value="<%=disciplina%>">
+                        <input type="hidden" name="matricula-aluno" value="<%=b.getAluno().getMatricula()%>">
+                        <input type="hidden" name="id-disciplina" value="<%=b.getDisciplina().getId()%>">
+                        <input type="hidden" name="eh-n1" class="eh-n1">
+                        <input type="hidden" name="tipo" value="todos">
+                        <input type="hidden" name="disciplina" value="<%=disciplina%>">
 
-                                    <button type="submit" name="acao" value="editar">Enviar dados</button>
-                                </form>
-                            </dialog>
-                        </td>
+                        <button type="submit" name="acao" value="atualizar">Enviar dados</button>
+                    </form>
+                </dialog>
+            </td>
 
-                        <td class="modal">
-                            <button type="button" name="" class="abre-modal" data-modal="modal-exclui-duasnotas-<%=id%>">Excluir</button>
+            <td class="modal">
+                <button type="button" name="" class="abre-modal" data-modal="modal-exclui-duasnotas-<%=id%>">Excluir</button>
 
-                            <dialog id="modal-exclui-duasnotas-<%=id%>">
-                                <button type="button" class="fecha-modal" data-modal="modal-exclui-duasnotas-<%=id%>">x</button>
+                <dialog id="modal-exclui-duasnotas-<%=id%>">
+                    <button type="button" class="fecha-modal" data-modal="modal-exclui-duasnotas-<%=id%>">x</button>
 
-                                <p>Nota a ser excluída: <em class="antiga-nota"></em></p>
+                    <p>Nota a ser excluída: <em class="antiga-nota"></em></p>
 
-                                <form action="observacoes-servlet" method="get">
-                                    <label for="nota">Selecione uma nota para excluir:</label>
-                                    <select name="nota" class="nota-select" required>
-                                        <option value="">Selecione</option>
-                                        <option value="<%=b.getNota1()%>">Nota 1</option>
-                                        <option value="<%=b.getNota2()%>">Nota 2</option>
-                                    </select>
+                    <form action="nota-servlet" method="post">
+                        <label for="nota">Selecione uma nota para excluir:</label>
+                        <select name="nota" class="nota-select" required>
+                            <option value="">Selecione</option>
+                            <option value="<%=b.getNota1()%>" data-n1="true">Nota 1</option>
+                            <option value="<%=b.getNota2()%>" data-n1="false">Nota 2</option>
+                        </select>
 
-                                    <input type="hidden" name="nome-aluno" value="<%=b.getAluno().getNome()%>">
-                                    <input type="hidden" name="nome-disciplina" value="<%=b.getDisciplina().getNome()%>">
-                                    <input type="hidden" name="disciplina" value="<%=disciplina%>">
+                        <input type="hidden" name="matricula-aluno" value="<%=b.getAluno().getMatricula()%>">
+                        <input type="hidden" name="id-disciplina" value="<%=b.getDisciplina().getId()%>">
+                        <input type="hidden" name="eh-n1" class="eh-n1">
+                        <input type="hidden" name="tipo" value="todos">
+                        <input type="hidden" name="disciplina" value="<%=disciplina%>">
 
-                                    <label for="excluir">Você tem certeza que quer excluir essa nota?</label>
+                        <label for="excluir">Você tem certeza que quer excluir essa nota?</label>
 
-                                    <button type="submit" name="acao" value="excluir">Sim</button>
-                                    <button type="button" class="fecha-modal" data-modal="modal-exclui-duasnotas-<%=id%>">Não</button>
-                                </form>
-                            </dialog>
-                        </td>
-                    </tr>
-                    <%}}}%>
-                </tbody>
+                        <button type="submit" name="acao" value="excluir">Sim</button>
+                        <button type="button" class="fecha-modal" data-modal="modal-exclui-duasnotas-<%=id%>">Não</button>
+                    </form>
+                </dialog>
+            </td>
+        </tr>
+        <%}}}%>
+        </tbody>
 
-            </table>
-            <%} else {%> <p>Nenhum boletim encontrado.</p> <%}%>
-        </main>
+    </table>
+    <%} else {%> <p>Nenhum boletim encontrado.</p> <%}%>
+</main>
 
-        <script src="<%=request.getContextPath()%>/js/script.js"></script>
-    </body>
+<script src="<%=request.getContextPath()%>/js/script.js"></script>
+</body>
 </html>
