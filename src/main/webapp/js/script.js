@@ -32,6 +32,25 @@ document.querySelectorAll('.nota-select').forEach((select) => {
     })
 })
 
+// MUDAR PONTUAÇÃO COM BASE NOS BOTÕES
+document.querySelectorAll('form[action="casa-servlet"]').forEach((form) => {
+    const span = form.querySelector('.pontuacao')
+    const hidden = form.querySelector('input[name="pontuacao"]')
+    const botoes = form.querySelectorAll('.ajuste')
+
+    if (!span || !hidden || botoes.length === 0) return
+
+    let valor = Number(hidden.value)
+
+    botoes.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            valor += Number(btn.dataset.valor)
+            span.textContent = valor
+            hidden.value = valor
+        })
+    })
+})
+
 // MUDANÇA AUTOMÁTICA NO INPUT RADIO
 const radioDigitar = document.getElementById('digitar')
 const radioEscolher = document.getElementById('escolher')

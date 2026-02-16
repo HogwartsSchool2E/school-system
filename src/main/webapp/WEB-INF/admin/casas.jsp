@@ -2,7 +2,9 @@
 <%@ page import="com.hogwarts.model.banco.CasaHogwarts" %>
 <%@ page import="com.hogwarts.model.banco.Professor" %>
 <%@ page import="com.hogwarts.model.banco.Disciplina" %>
-<%@ page import="com.hogwarts.utils.Formatador" %><%--
+<%@ page import="com.hogwarts.utils.Formatador" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Map" %><%--
   Created by IntelliJ IDEA.
   User: daviramos-ieg
   Date: 07/02/2026
@@ -13,6 +15,7 @@
 <%
     List<CasaHogwarts> casasHogwarts = (List<CasaHogwarts>) request.getAttribute("casasHogwarts");
     List<Disciplina> professores = (List<Disciplina>) request.getAttribute("professores");
+    HashMap<Integer, String> profJaMostrados = new HashMap<>();
 %>
 
 <html>
@@ -52,10 +55,24 @@
                         <label for="professor-novo-id">Selecione o novo professor:</label>
                         <select name="professor-novo-id" id="professor-novo-id" required>
                             <option value="">Selecione</option>
-                            <%for (Disciplina d : professores) {
-                            if (!d.getProfessor().getNome().equals(c.getProfessor().getNome())){%>
-                            <option value="<%=d.getProfessor().getId()%>"><%=d.getProfessor().getNome()%></option>
-                            <%}}%>
+
+                            <%Integer idAtual = (c.getProfessor() == null) ? null : c.getProfessor().getId();
+
+                            for (Disciplina d : professores){
+                                if (d.getProfessor() != null && d.getProfessor().getNome() != null){
+                                    int idProf = d.getProfessor().getId();
+                                    String nome = d.getProfessor().getNome();
+
+                                    if (idAtual == null || idProf != idAtual){
+                                        if (!profJaMostrados.containsKey(idProf)){
+                                            profJaMostrados.put(idProf, nome);
+                                        }
+                                    }
+                                }
+                            }
+
+                            for (Map.Entry<Integer, String> p : profJaMostrados.entrySet()){%>
+                            <option value="<%=p.getKey()%>"><%=p.getValue()%></option><%}%>
                         </select>
 
                         <input type="hidden" name="professor-antigo-id" value="<%=c.getProfessor().getId()%>">
@@ -74,11 +91,16 @@
                     <p>Antiga pontuação: <em><%=c.getPontuacao()%></em></p>
 
                     <form method="post" action="casa-servlet">
-                        <label for="pontuacao">Digite a pontuação a ser adicionada:</label>
-                        <input type="number" name="pontuacao" id="pontuacao" step="10" required>
+                        <label>Pontuação após alteração:</label>
+                        <p><span class="pontuacao"><%=c.getPontuacao()%></span> pontos</p>
+
+                        <button type="button" class="ajuste" data-valor="-50">-50</button>
+                        <button type="button" class="ajuste" data-valor="-10">-10</button>
+                        <button type="button" class="ajuste" data-valor="10">+10</button>
+                        <button type="button" class="ajuste" data-valor="50">+50</button>
 
                         <input type="hidden" name="id-casa" value="<%=c.getId()%>">
-                        <input type="hidden" name="pontuacao-antiga" value="<%=c.getPontuacao()%>">
+                        <input type="hidden" name="pontuacao" value="<%=c.getPontuacao()%>">
 
                         <button type="submit" name="acao" value="atualizar-ponto">Enviar dados</button>
                     </form>

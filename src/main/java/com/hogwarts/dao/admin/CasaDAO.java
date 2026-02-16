@@ -50,10 +50,8 @@ public class CasaDAO {
         }
     }
 
-    public boolean atualizarPontos(int pontuacaoAntiga, int pontuacaoAdicionar, int idCasa) throws SQLException, ClassNotFoundException{
+    public boolean atualizarPontos(int pontuacao, int idCasa) throws SQLException, ClassNotFoundException{
         String sql = "UPDATE CASA_HOGWARTS SET PONTUACAO = ? WHERE ID = ?";
-        int pontuacao = pontuacaoAdicionar + pontuacaoAntiga;
-
         try (Connection conn = Conexao.conectar();
         PreparedStatement pstmt = conn.prepareStatement(sql)){
             pstmt.setInt(1, pontuacao);

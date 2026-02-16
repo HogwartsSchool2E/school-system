@@ -59,9 +59,8 @@ public class CasaServlet extends HttpServlet {
         CasaDAO c = new CasaDAO();
 
         int pontuacao = Integer.parseInt(req.getParameter("pontuacao"));
-        int pontuacaoAntiga = Integer.parseInt(req.getParameter("pontuacao-antiga"));
         int idCasa = Integer.parseInt(req.getParameter("id-casa"));
 
-        c.atualizarPontos(pontuacaoAntiga, pontuacao, idCasa);
+        c.atualizarPontos(pontuacao, idCasa);
     }
 }
