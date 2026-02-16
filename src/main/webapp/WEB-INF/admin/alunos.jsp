@@ -57,7 +57,7 @@
 
                     <form method="post" action="aluno-servlet">
                         <label for="email">Digite o novo email</label>
-                        <input type="email" name="email" id="email" maxlength="50">
+                        <input type="email" name="email" id="email" maxlength="50" pattern="^[a-z]+\.[a-z]+@hogwarts\.com$" required>
 
                         <input type="hidden" name="matricula" value="<%=a.getMatricula()%>">
 
@@ -104,10 +104,10 @@
                 <input type="text" name="aluno" id="aluno" maxlength="70">
 
                 <label for="cpf">Digite o CPF do aluno:</label>
-                <input type="text" name="cpf" id="cpf" maxlength="14">
+                <input type="text" name="cpf" id="cpf" maxlength="14" oninput="mascaraCpf(this)" pattern="^\d{3}\.\d{3}\.\d{3}-\d{2}$">
 
                 <label for="email">Digite o email do aluno:</label>
-                <input type="email" name="email" id="email" maxlength="50">
+                <input type="email" name="email" id="email" maxlength="50" pattern="^[a-z]+\.[a-z]+@hogwarts\.com$" required>
 
                 <label for="senha">Digite a senha do aluno:</label>
                 <input type="password" name="senha" id="senha">
@@ -129,5 +129,6 @@
     <%}%>
 </main>
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
+<script src="<%=request.getContextPath()%>/js/regex.js"></script>
 </body>
 </html>

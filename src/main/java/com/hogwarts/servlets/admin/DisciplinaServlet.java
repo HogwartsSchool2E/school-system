@@ -1,8 +1,10 @@
 package com.hogwarts.servlets.admin;
 
 import com.hogwarts.dao.admin.DisciplinaDAO;
+import com.hogwarts.exceptions.RegexMatchException;
 import com.hogwarts.model.banco.Disciplina;
 import com.hogwarts.model.banco.Professor;
+import com.hogwarts.utils.Regex;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -53,14 +55,21 @@ public class DisciplinaServlet extends HttpServlet {
             nsae.printStackTrace();
             req.setAttribute("mensagemErro", "Houve um erro ao processar as informações de criptografia de senha, não se preocupe, tente novamente em alguns minutos.");
             req.getRequestDispatcher("WEB-INF/pagina-erro.jsp").forward(req, resp);
+        } catch (RegexMatchException rme){
+            req.setAttribute("mensagemErro", rme.getMessage());
+            req.getRequestDispatcher("WEB-INF/pagina-erro.jsp").forward(req, resp);
         }
     }
 
     private void inserirProf(HttpServletRequest req) throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
         Professor p = new Professor();
 
+        String usuario = req.getParameter("usuario");
+
+        if (!Regex.checarUsuario(usuario)) throw new RegexMatchException("O nome de usuário digitado é inválido e não segue os padrões da escola.");
+
         p.setNome(req.getParameter("professor"));
-        p.setUsuario(req.getParameter("usuario"));
+        p.setUsuario(usuario);
         p.setSenha(req.getParameter("senha"));
 
         new DisciplinaDAO().inserirProfessor(p);

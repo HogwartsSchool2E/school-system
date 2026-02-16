@@ -149,7 +149,7 @@
                 <input type="text" name="professor" id="professor" maxlength="70" required>
 
                 <label for="usuario">Digite o nome do usuário:</label>
-                <input type="text" name="usuario" id="usuario" maxlength="50" required>
+                <input type="text" name="usuario" id="usuario" maxlength="50" pattern="^[a-z]+\.[a-z]+$" required>
 
                 <label for="senha">Digite a senha:</label>
                 <input type="password" name="senha" id="senha" required>
