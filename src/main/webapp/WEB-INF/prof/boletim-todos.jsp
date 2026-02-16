@@ -53,7 +53,7 @@
             <td><%=b.getNota2() == 0 ? "--" : ("<strong>" + b.getNota2() + "</strong>") %></td>
             <td><%=b.getMedia() == 0 ? "--" : ("<strong>" + b.getMedia() + "</strong>")%></td>
             <td><%=mostrar(b.getObservacao().getObservacao())%></td>
-            <td><%=b.getSituacao()%></td>
+            <td><%=b.getSituacao().getNome()%></td>
 
             <%if (b.getNota1() == 0) {%>
             <td colspan="3">

@@ -32,7 +32,7 @@
             <strong>Nota 2: </strong> <%=boletim.getNota2() == 0 ? "--" : ("<strong>" + boletim.getNota2() + "</strong>") %> <br>
             <strong>Média: </strong> <%=boletim.getMedia() == 0 ? "--" : ("<strong>" + boletim.getMedia() + "</strong>")%> <br>
             <strong>Observação: </strong> <%=Formatador.mostrar(boletim.getObservacao().getObservacao())%> <br>
-            <strong>Situação: </strong> <%=boletim.getSituacao()%> <br> <br>
+            <strong>Situação: </strong> <%=boletim.getSituacao().getNome()%> <br> <br>
             <%}%>
 
             <section>

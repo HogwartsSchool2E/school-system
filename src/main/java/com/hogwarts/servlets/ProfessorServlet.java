@@ -50,6 +50,10 @@ public class ProfessorServlet extends HttpServlet {
             nsae.printStackTrace();
             req.setAttribute("mensagemErro", "Houve um erro ao processar as informações de criptografia de senha, não se preocupe, tente novamente em alguns minutos.");
             req.getRequestDispatcher("WEB-INF/pagina-erro.jsp").forward(req, resp);
+        } catch (NullPointerException npe){
+            npe.printStackTrace();
+            req.setAttribute("mensagemErro", "Sua sessão expirou, reenvie o formulário.");
+            req.getRequestDispatcher("WEB-INF/pagina-erro.jsp").forward(req, resp);
         }
     }
 
@@ -79,6 +83,10 @@ public class ProfessorServlet extends HttpServlet {
         } catch (ClassNotFoundException cnfe){
             cnfe.printStackTrace();
             req.setAttribute("mensagemErro", "O sistema não conseguiu acessar um componente necessário, não se preocupe, tente novamente em alguns minutos.");
+            req.getRequestDispatcher("WEB-INF/pagina-erro.jsp").forward(req, resp);
+        } catch (NullPointerException npe){
+            npe.printStackTrace();
+            req.setAttribute("mensagemErro", "Sua sessão expirou, reenvie o formulário.");
             req.getRequestDispatcher("WEB-INF/pagina-erro.jsp").forward(req, resp);
         }
     }

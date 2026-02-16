@@ -47,6 +47,24 @@
             </form>
         </dialog>
     </div>
+
+    <div class="modal">
+        <button type="button" class="abre-modal" data-modal="modal-4">Área do Aluno</button>
+
+        <dialog id="modal-4">
+            <button type="button" class="fecha-modal" data-modal="modal-4">x</button>
+
+            <form action="aluno-servlet" method="post">
+                <label for="email-aluno">Digite seu email:</label>
+                <input type="email" name="email" id="email-aluno">
+
+                <label for="senha-aluno">Digite sua senha:</label>
+                <input type="password" name="senha" id="senha-aluno">
+
+                <button type="submit" name="acao" value="login">Enviar dados</button>
+            </form>
+        </dialog>
+    </div>
 </main>
 
 <script src="js/script.js"></script>
