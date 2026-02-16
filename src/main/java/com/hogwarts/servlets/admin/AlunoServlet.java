@@ -1,8 +1,10 @@
 package com.hogwarts.servlets.admin;
 
 import com.hogwarts.dao.AlunoDAO;
+import com.hogwarts.exceptions.RegexMatchException;
 import com.hogwarts.model.banco.Aluno;
 import com.hogwarts.model.banco.CasaHogwarts;
+import com.hogwarts.utils.Regex;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -50,6 +52,9 @@ public class AlunoServlet extends HttpServlet {
             nsae.printStackTrace();
             req.setAttribute("mensagemErro", "Houve um erro ao processar as informações de criptografia de senha, não se preocupe, tente novamente em alguns minutos.");
             req.getRequestDispatcher("WEB-INF/pagina-erro.jsp").forward(req, resp);
+        } catch (RegexMatchException rme){
+            req.setAttribute("mensagemErro", rme.getMessage());
+            req.getRequestDispatcher("WEB-INF/pagina-erro.jsp").forward(req, resp);
         }
     }
 
@@ -58,17 +63,25 @@ public class AlunoServlet extends HttpServlet {
         c.setId(Integer.parseInt(req.getParameter("casa")));
 
         String nome = req.getParameter("aluno");
-        String cpf = req.getParameter("cpf");
+        String cpf = Regex.formatarCpf(req.getParameter("cpf"));
         String email = req.getParameter("email");
         String senha = req.getParameter("senha");
+
+        if (!Regex.checarCpf(cpf)) throw new RegexMatchException("Digite um CPF válido.");
+        if (!Regex.checarEmail(email)) throw new RegexMatchException("O email digitado é inválido e não segue os padrões da escola.");
 
         new AlunoDAO().inserirAluno(new Aluno(nome, cpf, email, senha, c));
     }
 
     private void atualizarAluno(HttpServletRequest req) throws SQLException, ClassNotFoundException{
         Aluno a = new Aluno();
-        a.setEmail(req.getParameter("email"));
+
+        String email = req.getParameter("email");
+
+        a.setEmail(email);
         a.setMatricula(Integer.parseInt(req.getParameter("matricula")));
+
+        if (!Regex.checarEmail(email)) throw new RegexMatchException("O email digitado é inválido e não segue os padrões da escola.");
 
         new AlunoDAO().atualizarAluno(a);
     }
