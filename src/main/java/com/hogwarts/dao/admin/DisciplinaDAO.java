@@ -11,21 +11,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DisciplinaDAO {
+//    Vincular disciplinas a alunos
+    public void vincularAlunos(int idDisc) throws SQLException, ClassNotFoundException{
+        String sqlSelect = "SELECT matricula FROM aluno ORDER BY 1";
+        String sqlInsert = "INSERT INTO nota (cod_aluno, cod_disciplina, nota_um, nota_dois) VALUES (?, ?, ?, ?)";
+
+        try(Connection conn = Conexao.conectar();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sqlSelect);
+
+            PreparedStatement pstmt = conn.prepareStatement(sqlInsert)){
+            while (rs.next()){
+                pstmt.setInt(1, rs.getInt("matricula"));
+                pstmt.setInt(2, idDisc);
+                pstmt.setDouble(3, 0.0);
+                pstmt.setDouble(4, 0.0);
+
+                pstmt.executeUpdate();
+            }
+        }
+    }
+
 //    Método de inserir disciplina
-    public boolean inserirDisciplina(Disciplina disciplina) throws SQLException, ClassNotFoundException {
-        String sql = "INSERT INTO disciplina (NOME, COD_PROFESSOR) VALUES (?, ?)";
+    public void inserirDisciplina(Disciplina disciplina) throws SQLException, ClassNotFoundException {
+        String sql = "INSERT INTO disciplina (NOME, COD_PROFESSOR) VALUES (?, ?) RETURNING ID";
 
         try (Connection conn = Conexao.conectar();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, disciplina.getNome());
             pstmt.setInt(2, disciplina.getProfessor().getId());
 
-            return pstmt.executeUpdate() > 0;
+            try (ResultSet rs = pstmt.executeQuery()){
+                if (rs.next()){
+                    vincularAlunos(rs.getInt("id"));
+                }
+            }
         }
     }
 
 //    Método de atualizar disciplina do professor
-    public boolean atualizarDisciplina(int idDisciplina, int idProfNovo) throws SQLException, ClassNotFoundException{
+    public void atualizarDisciplina(int idDisciplina, int idProfNovo) throws SQLException, ClassNotFoundException{
         String sql = """
                 DELETE FROM observacao WHERE cod_disciplina = ?;
                 UPDATE disciplina SET cod_professor = ? WHERE id = ?;
@@ -37,13 +62,11 @@ public class DisciplinaDAO {
             pstmt.setInt(1, idDisciplina);
             pstmt.setInt(2, idProfNovo);
             pstmt.setInt(3, idDisciplina);
-
-            return pstmt.executeUpdate() > 0;
         }
     }
 
 //    Método de inserir professor
-    public boolean inserirProfessor(Professor professor) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
+    public void inserirProfessor(Professor professor) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException {
         String sql = "INSERT INTO professor (NOME, USUARIO, SENHA) VALUES (?, ?, ?)";
 
         try (Connection conn = Conexao.conectar();
@@ -52,8 +75,6 @@ public class DisciplinaDAO {
             pstmt.setString(1, professor.getNome());
             pstmt.setString(2, professor.getUsuario());
             pstmt.setString(3, Hash.hashSenha(professor.getSenha()));
-
-            return pstmt.executeUpdate() > 0;
         }
     }
 
@@ -63,7 +84,7 @@ public class DisciplinaDAO {
         String sql = """
                      SELECT p.ID, p.NOME, p.USUARIO, d.id as "cod_disciplina", d.NOME as "DISCIPLINA"
                      FROM professor p
-                     LEFT JOIN disciplina d ON d.cod_professor = p.id
+                     FULL JOIN disciplina d ON d.cod_professor = p.id
                      """;
 
         try (Connection conn = Conexao.conectar();
@@ -87,40 +108,28 @@ public class DisciplinaDAO {
         }
     }
 
-//    Método de visualizar um professor
-    public Disciplina buscarProfessor(int id) throws SQLException, ClassNotFoundException{
+//    Método de visualizar outras disciplinas de um professor
+    public List<String> buscarOutrasDisciplinas(String disciplina) throws SQLException, ClassNotFoundException{
+        List<String> disciplinas = new ArrayList<>();
         String sql = """
-                     SELECT p.ID, p.NOME, p.USUARIO, d.id as "cod_disciplina", d.NOME as "DISCIPLINA"
-                     FROM professor p
-                     LEFT JOIN disciplina d ON d.cod_professor = p.id
-                     WHERE p.ID = ?;
-                     """;
+                SELECT nome FROM DISCIPLINA WHERE COD_PROFESSOR = (SELECT COD_PROFESSOR FROM DISCIPLINA WHERE NOME = ?)
+                """;
 
         try (Connection conn = Conexao.conectar();
-             PreparedStatement pstmt = conn.prepareStatement(sql)
-        ){
-            pstmt.setInt(1, id);
-            ResultSet rs = pstmt.executeQuery();
+             PreparedStatement pstmt = conn.prepareStatement(sql)){
 
-            if (rs.next()){
-                Professor p = new Professor();
-                Disciplina d = new Disciplina();
+            pstmt.setString(1, disciplina);
 
-                d.setId(rs.getInt("cod_disciplina"));
-                d.setNome(rs.getString("disciplina"));
-
-                p.setId(rs.getInt("id"));
-                p.setNome(rs.getString("nome"));
-                p.setUsuario(rs.getString("usuario"));
-                d.setProfessor(p);
-
-                return d;
+            try (ResultSet rs = pstmt.executeQuery()){
+                while (rs.next()){
+                    disciplinas.add(rs.getString(1));
+                } return disciplinas;
             }
-        } return null;
+        }
     }
 
 //    Método de excluir professores
-    public boolean excluirProfessor(int idProfessor) throws SQLException, ClassNotFoundException{
+    public void excluirProfessor(int idProfessor) throws SQLException, ClassNotFoundException{
         String sql = """
                       UPDATE disciplina
                       SET cod_professor = NULL
@@ -136,7 +145,6 @@ public class DisciplinaDAO {
                       DELETE FROM professor
                       WHERE id = ?
                       """;
-        CasaDAO ch = new CasaDAO();
 
         try (Connection conn = Conexao.conectar();
              PreparedStatement pstmt = conn.prepareStatement(sql)){
@@ -144,8 +152,6 @@ public class DisciplinaDAO {
             pstmt.setInt(2, idProfessor);
             pstmt.setInt(3, idProfessor);
             pstmt.setInt(4, idProfessor);
-
-            return pstmt.executeUpdate() > 0;
         }
     }
 

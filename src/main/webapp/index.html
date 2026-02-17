@@ -10,33 +10,6 @@
         <input type="submit" value="Clique aqui para ver dashboards">
     </form>
 
-    <form method="get" action="boletim-servlet">
-        <button type="submit" name="tipo" value="todos">
-            Boletim de todos os alunos
-        </button>
-        <button type="submit" name="tipo" value="observacao">
-            Cadastrar observação
-        </button>
-    </form>
-
-    <div class="modal">
-        <button type="button" name="tipo" class="abre-modal" data-modal="modal-1">
-            Boletim individual
-        </button>
-
-        <dialog id="modal-1">
-            <button type="button" class="fecha-modal" data-modal="modal-1">x</button>
-
-            <form action="boletim-servlet" method="get">
-                <label for="matricula">Digite a matrícula do aluno:</label>
-                <input type="number" name="matricula" id="matricula" autocomplete="on" min="1000" required>
-                <button type="submit" name="tipo" value="individual">
-                    Enviar dados
-                </button>
-            </form>
-        </dialog>
-    </div>
-
     <div class="modal">
         <button type="button" class="abre-modal" data-modal="modal-2">
             Área do administrador
@@ -56,8 +29,45 @@
             </form>
         </dialog>
     </div>
+
+    <div class="modal">
+        <button type="button" class="abre-modal" data-modal="modal-3">Área do Professor</button>
+
+        <dialog id="modal-3">
+            <button type="button" class="fecha-modal" data-modal="modal-3">x</button>
+
+            <form action="professor-servlet" method="post">
+                <label for="usuario">Digite o nome do usuario:</label>
+                <input type="text" name="usuario" id="usuario" autocomplete="on" maxlength="50" required>
+
+                <label for="senha-prof">Digite a senha do professor</label>
+                <input type="password" name="senha-prof" id="senha-prof" autocomplete="on" required>
+
+                <button type="submit">Enviar dados</button>
+            </form>
+        </dialog>
+    </div>
+
+    <div class="modal">
+        <button type="button" class="abre-modal" data-modal="modal-4">Área do Aluno</button>
+
+        <dialog id="modal-4">
+            <button type="button" class="fecha-modal" data-modal="modal-4">x</button>
+
+            <form action="aluno-servlet" method="post">
+                <label for="email-aluno">Digite seu email:</label>
+                <input type="email" name="email" id="email-aluno">
+
+                <label for="senha-aluno">Digite sua senha:</label>
+                <input type="password" name="senha" id="senha-aluno">
+
+                <button type="submit" name="acao" value="login">Enviar dados</button>
+            </form>
+        </dialog>
+    </div>
 </main>
 
 <script src="js/script.js"></script>
+
 </body>
 </html>

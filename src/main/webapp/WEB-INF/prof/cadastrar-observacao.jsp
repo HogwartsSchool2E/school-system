@@ -8,11 +8,12 @@
   Time: 00:38
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 
 <%--Capturando valores do servlet--%>
 <%
     List<Boletim> boletins = (List<Boletim>) request.getAttribute("boletins");
+    String disciplina = (String) request.getAttribute("disciplina");
 %>
 
 <html>
@@ -35,6 +36,7 @@
 
         <%int i = 0;
         for (Boletim b : boletins){
+            if (b.getDisciplina().getNome().equals(disciplina)){
         String id = String.valueOf(i++);%>
         <tbody>
             <tr>
@@ -59,6 +61,7 @@
 
                             <input type="hidden" name="matricula-aluno" value="<%=b.getAluno().getMatricula()%>">
                             <input type="hidden" name="id-disciplina" value="<%=b.getDisciplina().getId()%>">
+                            <input type="hidden" name="disciplina" value="<%=disciplina%>">
 
                             <button type="submit" name="acao" value="adicionar">Enviar dados</button>
                         </form>
@@ -79,6 +82,7 @@
                                 <input type="text" name="editar" id="editar" autocomplete="off" required>
 
                                 <input type="hidden" name="id-observacao" value="<%=b.getObservacao().getId()%>">
+                                <input type="hidden" name="disciplina" value="<%=disciplina%>">
 
                                 <button type="submit" name="acao" value="editar">Enviar dados</button>
                             </form>
@@ -95,6 +99,7 @@
 
                                 <input type="hidden" name="nome-aluno" value="<%=b.getAluno().getNome()%>">
                                 <input type="hidden" name="nome-disciplina" value="<%=b.getDisciplina().getNome()%>">
+                                <input type="hidden" name="disciplina" value="<%=disciplina%>">
 
                                 <button type="submit" name="acao" value="excluir">Sim</button>
                                 <button type="button" class="fecha-modal" data-modal="modal-exclui-<%=id%>">Não</button>
@@ -103,8 +108,8 @@
                     </td>
                 <%}%>
             </tr>
+            <%}}%>
         </tbody>
-        <%}%>
     </table>
     <%} else {%> <p>Nenhum aluno encontrado.</p> <%}%>
 </main>

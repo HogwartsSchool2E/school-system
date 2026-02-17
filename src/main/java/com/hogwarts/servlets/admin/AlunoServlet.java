@@ -1,13 +1,16 @@
 package com.hogwarts.servlets.admin;
 
 import com.hogwarts.dao.AlunoDAO;
+import com.hogwarts.exceptions.RegexMatchException;
 import com.hogwarts.model.banco.Aluno;
 import com.hogwarts.model.banco.CasaHogwarts;
+import com.hogwarts.utils.Regex;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -20,20 +23,38 @@ public class AlunoServlet extends HttpServlet {
         try{
             switch(req.getParameter("acao")){
                 case "inserir":
-                    inserirAluno(req); break;
+                    inserirAluno(req);
+                    resp.sendRedirect(req.getContextPath() + "/admin-servlet?tipo=alunos");
+                    break;
 
                 case "atualizar":
-                    atualizarAluno(req); break;
+                    atualizarAluno(req);
+                    resp.sendRedirect(req.getContextPath() + "/admin-servlet?tipo=alunos");
+                    break;
 
                 case "excluir":
-                    excluirAluno(req); break;
+                    excluirAluno(req);
+                    resp.sendRedirect(req.getContextPath() + "/admin-servlet?tipo=alunos");
+                    break;
+
+                case "login":
+                    if (loginAluno(req, resp)) req.getRequestDispatcher("WEB-INF/aluno/inicial.jsp").forward(req, resp);
+                    break;
+
+                case "boletim":
+                    boletim(req);
+                    req.getRequestDispatcher("WEB-INF/aluno/boletim.jsp").forward(req, resp);
+                    break;
+
+                case "perfil":
+                    boletim(req);
+                    req.getRequestDispatcher("WEB-INF/aluno/perfil.jsp").forward(req, resp);
+                    break;
 
                 default:
                     req.setAttribute("mensagemErro", "Não foi possível concluir sua solicitação.");
                     req.getRequestDispatcher("WEB-INF/pagina-erro.jsp").forward(req, resp);
             }
-
-            resp.sendRedirect(req.getContextPath() + "/admin-servlet?tipo=alunos");
         } catch (SQLException sqle){
             sqle.printStackTrace();
             req.setAttribute("mensagemErro", "Houve um problema com o banco de dados, não se preocupe, tente novamente em alguns minutos.");
@@ -50,6 +71,13 @@ public class AlunoServlet extends HttpServlet {
             nsae.printStackTrace();
             req.setAttribute("mensagemErro", "Houve um erro ao processar as informações de criptografia de senha, não se preocupe, tente novamente em alguns minutos.");
             req.getRequestDispatcher("WEB-INF/pagina-erro.jsp").forward(req, resp);
+        } catch (RegexMatchException rme){
+            req.setAttribute("mensagemErro", rme.getMessage());
+            req.getRequestDispatcher("WEB-INF/pagina-erro.jsp").forward(req, resp);
+        } catch (NullPointerException npe){
+            npe.printStackTrace();
+            req.setAttribute("mensagemErro", "Sua sessão expirou, reenvie o formulário.");
+            req.getRequestDispatcher("WEB-INF/pagina-erro.jsp").forward(req, resp);
         }
     }
 
@@ -58,17 +86,25 @@ public class AlunoServlet extends HttpServlet {
         c.setId(Integer.parseInt(req.getParameter("casa")));
 
         String nome = req.getParameter("aluno");
-        String cpf = req.getParameter("cpf");
+        String cpf = Regex.formatarCpf(req.getParameter("cpf"));
         String email = req.getParameter("email");
         String senha = req.getParameter("senha");
+
+        if (!Regex.checarCpf(cpf)) throw new RegexMatchException("Digite um CPF válido.");
+        if (!Regex.checarEmail(email)) throw new RegexMatchException("O email digitado é inválido e não segue os padrões da escola.");
 
         new AlunoDAO().inserirAluno(new Aluno(nome, cpf, email, senha, c));
     }
 
     private void atualizarAluno(HttpServletRequest req) throws SQLException, ClassNotFoundException{
         Aluno a = new Aluno();
-        a.setEmail(req.getParameter("email"));
+
+        String email = req.getParameter("email");
+
+        a.setEmail(email);
         a.setMatricula(Integer.parseInt(req.getParameter("matricula")));
+
+        if (!Regex.checarEmail(email)) throw new RegexMatchException("O email digitado é inválido e não segue os padrões da escola.");
 
         new AlunoDAO().atualizarAluno(a);
     }
@@ -76,4 +112,34 @@ public class AlunoServlet extends HttpServlet {
     private void excluirAluno(HttpServletRequest req) throws SQLException, ClassNotFoundException{
         new AlunoDAO().excluirAluno(Integer.parseInt(req.getParameter("matricula")));
     }
+
+    private boolean loginAluno(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ClassNotFoundException, NoSuchAlgorithmException, ServletException, IOException {
+        AlunoDAO dao = new AlunoDAO();
+        String email = req.getParameter("email");
+        String senha = req.getParameter("senha");
+
+        if (dao.login(email, senha)) {
+            HttpSession session = req.getSession();
+            session.setAttribute("aluno", dao.buscarAluno(email, senha));
+            return true;
+        }
+        else {
+            req.setAttribute("mensagemErro", "Houve um problema com o seu cadastro. Esta página é somente para os alunos.");
+            req.getRequestDispatcher("WEB-INF/pagina-erro.jsp").forward(req, resp);
+            return false;
+        }
+    }
+
+    private void boletim(HttpServletRequest req) throws SQLException, ClassNotFoundException {
+        int matricula = Integer.parseInt(req.getParameter("matricula"));
+
+        req.setAttribute("boletins", new AlunoDAO().gerarBoletimIndividual(matricula));
+        req.setAttribute("aluno", new AlunoDAO().buscarAluno(matricula));
+    }
+
+    private void perfil(HttpServletRequest req) throws SQLException, ClassNotFoundException {
+        int matricula = Integer.parseInt(req.getParameter("matricula"));
+        req.setAttribute("aluno", new AlunoDAO().buscarAluno(matricula));
+    }
 }
+
