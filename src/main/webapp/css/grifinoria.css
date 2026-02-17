@@ -1,0 +1,229 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: url("../images/pags-alunos/fundo.jpg") no-repeat center center;
+    color: #fff;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+/* coisa com fonte de hp */
+.top-title {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding-top: 40px;
+}
+
+.top-title h1 {
+    font-family: 'Harry P';
+    font-size: 50px;
+    color: #f5d48b;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+.line {
+    width: 300px;
+    height: 2px;
+    background: #8b7a52;
+    box-shadow: 0 0 30px rgba(245, 212, 139, 0.8);
+}
+
+/* subtitulos popins */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin-left: 100px;
+    margin-top: 50px;
+    flex-grow: 1;
+}
+
+.hero-content h2 {
+    font-size: 45px;
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 17px;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* configuracoes dos cards */
+.cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 80px;
+    padding: 80px 40px;
+    margin-top: -10px;
+    position: relative;
+    z-index: 2;
+}
+
+.card {
+    width: 300px;
+    background: linear-gradient(rgba(136, 24, 24, 0.08),
+    rgba(101, 11, 11, 0.484));
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+}
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.card h3 {
+    font-size: 18px;
+    padding: 10px;
+}
+
+.card p {
+    font-size: 14px;
+    padding: 0 10px 10px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.card button {
+    margin: 0 15px 15px;
+    padding: 10px;
+    width: calc(100% - 30px);
+    border-radius: 10px;
+    border: 1px solid #f5d48b;
+    background: #5b1010af;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.card button:hover {
+    background: #f5d48b;
+    color: #5b1010;
+    border-color: #5b1010;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+
+
+@media (max-width: 1200px) {
+    .cards {
+        gap: 40px;
+    }
+}
+
+@media (max-width: 992px) {
+    .top-title {
+        flex-direction: column;
+        gap: 20px;
+        padding-top: 30px;
+    }
+
+    .top-title h1 {
+        font-size: 40px;
+    }
+
+    .line {
+        width: 200px;
+    }
+
+    .hero-content {
+        margin-left: 50px;
+        margin-right: 50px;
+        max-width: none;
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .hero-content h2 {
+        font-size: 35px;
+    }
+
+    .hero-content p {
+        font-size: 16px;
+    }
+
+    .cards {
+        gap: 30px;
+        padding: 40px 20px;
+        margin-top: 0;
+    }
+
+    .card {
+        width: 280px;
+    }
+}
+
+@media (max-width: 768px) {
+    .top-title h1 {
+        font-size: 35px;
+    }
+
+    .line {
+        width: 150px;
+    }
+
+    .hero-content {
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-top: 20px;
+    }
+
+    .hero-content h2 {
+        font-size: 30px;
+    }
+
+    .hero-content p {
+        font-size: 15px;
+    }
+
+    .cards {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 30px 10px;
+    }
+
+    .card {
+        width: 90%;
+        max-width: 320px;
+    }
+}
+
+@media (max-width: 480px) {
+    .top-title h1 {
+        font-size: 30px;
+    }
+
+    .hero-content h2 {
+        font-size: 25px;
+    }
+
+    .hero-content p {
+        font-size: 14px;
+    }
+
+    .card {
+        width: 95%;
+    }
+}

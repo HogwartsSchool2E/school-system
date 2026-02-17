@@ -1,20 +1,56 @@
-<%@ page import="com.hogwarts.model.banco.Aluno" %><%--
-  Created by IntelliJ IDEA.
-  User: daviramos-ieg
-  Date: 16/02/2026
-  Time: 11:40
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.hogwarts.model.banco.Aluno" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%Aluno aluno = (Aluno) session.getAttribute("aluno");%>
+<%
 
-<html>
+    Aluno aluno = (Aluno) session.getAttribute("aluno");
+
+
+    if (aluno == null) {
+        response.sendRedirect("index.html");
+        return;
+    }
+
+
+    String casaHogwartsNome = aluno.getCasaHogwarts().getNome();
+    String nomeDoCss = "";
+
+
+    switch (casaHogwartsNome.toLowerCase()) {
+        case "grifinória":
+            nomeDoCss = "grifinoria.css";
+            break;
+        case "sonserina":
+            nomeDoCss = "sonserina.css";
+            break;
+        case "lufa-lufa": // Certifique-se de que o nome da casa corresponde exatamente
+            nomeDoCss = "lufa-lufa.css";
+            break;
+        case "corvinal":
+            nomeDoCss = "corvinal.css";
+            break;
+    }
+%>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
 <head>
-    <title>Title</title>
-</head>
-<body>
+    <meta charset="UTF-8">
+    <title>Portal do Aluno - <%= aluno.getCasaHogwarts().getNome() %>
+    </title>
 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;1,400&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Harry+P&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="grifinoria.css">
+
+    <link rel="stylesheet" type="text/css" href="css/<%= nomeDoCss %>">
+
+</head>
+
+<body>
 <form action="aluno-servlet" method="post" id="f">
     <input type="hidden" name="matricula" value="<%=aluno.getMatricula()%>">
 </form>
@@ -23,49 +59,55 @@
     <input type="hidden" name="matricula" value="<%=aluno.getMatricula()%>">
 </form>
 
-<header>
-    <h1>Portal do Aluno - <%=aluno.getCasaHogwarts().getNome()%></h1>
+<header class="hero">
+    <div class="overlay"></div>
 
-    <h3>Olá, <%=aluno.getNome()%>! Seja muito bem-vindo.</h3>
-    <p><em>"Enquanto este castelo se mantiver erguido, manter-se-á também o compromisso solene de instruir, proteger e iluminar todos aqueles que escolhem trilhar o caminho do saber."</em></p>
+    <div class="top-title">
+        <span class="line"></span>
+
+        <h1>Portal do Aluno - <%=aluno.getCasaHogwarts().getNome()%>
+        </h1>
+        <span class="line"></span>
+    </div>
+
+    <div class="hero-content">
+
+        <h2>Olá, <%=aluno.getNome()%>!<br>Seja muito bem-vindo(a).</h2>
+
+        <p>
+            “Enquanto este castelo se mantiver erguido, manter-se-á também o compromisso
+            solene de instruir, proteger e iluminar todos aqueles que escolhem trilhar
+            o caminho do saber.”
+        </p>
+    </div>
 </header>
 
-<main>
-    <section>
-        <img src="" alt="">
+<section class="cards">
+    <div class="card">
+        <img src="images/card-notas.jpg" alt="Notas e Observações">
+        <h3>Visualizar notas e observações</h3>
+        <p>Seção reservada para visualização de notas e observações.</p>
 
-        <div>
-            <h5>Visualizar Notas e Observações</h5>
-            <hr>
-            <strong>Seção reservada para visualização de notas e observações registradas pelos professores.</strong>
+        <button form="f" name="acao" value="boletim">Acessar</button>
+    </div>
 
-            <button form="f" name="acao" value="boletim">Acessar</button>
-        </div>
-    </section>
+    <div class="card">
+        <img src="images/card-boletim.jpg" alt="Emitir Boletim Escolar">
+        <h3>Emitir Boletim Escolar</h3>
+        <p>Seção reservada para a emissão do boletim escolar - sujeito a não disponibilidade de notas*.</p>
 
-    <section>
-        <img src="" alt="">
+        <button form="d" name="acao" value="download">Acessar</button>
+    </div>
 
-        <div>
-            <h5>Emitir boletim</h5>
-            <hr>
-            <strong>Clique aqui para fazer download do boletim.</strong>
+    <div class="card">
+        <img src="images/card-perfil.jpg" alt="Visualizar Perfil">
+        <h3>Visualizar perfil</h3>
+        <p>Seção reservada para visualizar seu perfil.</p>
 
-            <button form="d" name="acao" value="download">Acessar</button>
-        </div>
-    </section>
+        <button form="f" name="acao" value="perfil">Acessar</button>
+    </div>
+</section>
 
-    <section>
-        <img src="" alt="">
-
-        <div>
-            <h5>Visualizar perfil</h5>
-            <hr>
-            <strong>Visualize seu perfil com seus dados.</strong>
-
-            <button form="f" name="acao" value="perfil">Acessar</button>
-        </div>
-    </section>
-</main>
 </body>
+
 </html>
