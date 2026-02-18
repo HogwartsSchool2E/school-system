@@ -83,7 +83,7 @@
 
 <section class="cards">
     <div class="card">
-        <img src="images/card-notas.jpg" alt="Notas e Observações">
+        <img src="images/pags-alunos/card-observacao" alt="Notas e Observações">
         <h3>Visualizar notas e observações</h3>
         <p>Seção reservada para visualização de notas e observações.</p>
 
@@ -91,7 +91,7 @@
     </div>
 
     <div class="card">
-        <img src="images/card-boletim.jpg" alt="Emitir Boletim Escolar">
+        <img src="../../images/pags-alunos/card-boletim.png" alt="Emitir Boletim Escolar">
         <h3>Emitir Boletim Escolar</h3>
         <p>Seção reservada para a emissão do boletim escolar - sujeito a não disponibilidade de notas*.</p>
 
@@ -99,7 +99,7 @@
     </div>
 
     <div class="card">
-        <img src="images/card-perfil.jpg" alt="Visualizar Perfil">
+        <img src="../../images/pags-alunos/card-perfil.png" alt="Visualizar Perfil">
         <h3>Visualizar perfil</h3>
         <p>Seção reservada para visualizar seu perfil.</p>
 
