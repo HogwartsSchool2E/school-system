@@ -23,7 +23,7 @@
         case "sonserina":
             nomeDoCss = "sonserina.css";
             break;
-        case "lufa-lufa": // Certifique-se de que o nome da casa corresponde exatamente
+        case "lufa-lufa":
             nomeDoCss = "lufa-lufa.css";
             break;
         case "corvinal":
@@ -44,7 +44,6 @@
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Harry+P&display=swap"
           rel="stylesheet">
-    <link rel="stylesheet" href="grifinoria.css">
 
     <link rel="stylesheet" type="text/css" href="css/<%= nomeDoCss %>">
 
