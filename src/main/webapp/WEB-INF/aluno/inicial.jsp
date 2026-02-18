@@ -2,19 +2,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-
     Aluno aluno = (Aluno) session.getAttribute("aluno");
-
 
     if (aluno == null) {
         response.sendRedirect("index.html");
         return;
     }
 
-
     String casaHogwartsNome = aluno.getCasaHogwarts().getNome();
     String nomeDoCss = "";
-
 
     switch (casaHogwartsNome.toLowerCase()) {
         case "grifinória":
@@ -29,6 +25,9 @@
         case "corvinal":
             nomeDoCss = "corvinal.css";
             break;
+        default:
+            nomeDoCss = "default.css"; // Boa prática para evitar erros
+            break;
     }
 %>
 
@@ -42,9 +41,10 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;1,400&display=swap"
           rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Harry+P&display=swap"
+    <link href="https://fonts.googleapis.com/2?family=Harry+P&display=swap"
           rel="stylesheet">
 
+    <%-- O link para o CSS já deve estar certo se o background funciona --%>
     <link rel="stylesheet" type="text/css" href="css/<%= nomeDoCss %>">
 
 </head>
@@ -83,7 +83,8 @@
 
 <section class="cards">
     <div class="card">
-        <img src="images/pags-alunos/card-observacao" alt="Notas e Observações">
+        <%-- **Ajuste o src aqui:** Use request.getContextPath() --%>
+        <img src="<%= request.getContextPath() %>/images/pags-alunos/card-observacao.png" alt="Notas e Observações">
         <h3>Visualizar notas e observações</h3>
         <p>Seção reservada para visualização de notas e observações.</p>
 
@@ -91,7 +92,8 @@
     </div>
 
     <div class="card">
-        <img src="../../images/pags-alunos/card-boletim.png" alt="Emitir Boletim Escolar">
+        <%-- **Ajuste o src aqui:** Use request.getContextPath() --%>
+        <img src="<%= request.getContextPath() %>/images/pags-alunos/card-boletim.png" alt="Emitir Boletim Escolar">
         <h3>Emitir Boletim Escolar</h3>
         <p>Seção reservada para a emissão do boletim escolar - sujeito a não disponibilidade de notas*.</p>
 
@@ -99,9 +101,10 @@
     </div>
 
     <div class="card">
-        <img src="../../images/pags-alunos/card-perfil.png" alt="Visualizar Perfil">
+        <%-- **Ajuste o src aqui:** Use request.getContextPath() --%>
+        <img src="<%= request.getContextPath() %>/images/pags-alunos/card-perfil.png" alt="Visualizar Perfil">
         <h3>Visualizar perfil</h3>
-        <p>Seção reservada para visualizar seu perfil.</p>
+        <p>Seção reservada para visualizar seu perfil. - Visualização de: Nome, período, turma, email e cpf.</p>
 
         <button form="f" name="acao" value="perfil">Acessar</button>
     </div>
