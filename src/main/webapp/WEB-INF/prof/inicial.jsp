@@ -21,16 +21,7 @@
 <html>
 <head>
     <title>Title</title>
-
-    <style>
-        .astext {
-            color: blue;
-            border:none;
-            margin:0;
-            padding:0;
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/modal.css">
 </head>
 <body>
 <main>
@@ -83,7 +74,9 @@
         </button>
 
         <dialog id="modal-2">
-            <button type="button" class="fecha-modal" data-modal="modal-2">x</button>
+            <button type="button" class="fecha-modal" data-modal="modal-2">
+                <img src="<%=request.getContextPath()%>/assets/icons/fecha.webp" alt="Sair">
+            </button>
 
             <form action="boletim-servlet" method="get">
                 <div>
@@ -123,7 +116,7 @@
         </dialog>
     </div>
 </main>
-<script src="<%=request.getContextPath()%>/js/script.js" defer></script>
+<script src="<%=request.getContextPath()%>/assets/js/script.js" defer></script>
 
 </body>
 </html>

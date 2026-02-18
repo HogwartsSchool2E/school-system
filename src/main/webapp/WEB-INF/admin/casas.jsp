@@ -21,6 +21,7 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/modal.css">
 </head>
 <body>
 <main>
@@ -113,7 +114,7 @@
     <%} else {%> <p>Nenhuma casa encontrada.</p> <%}%>
 </main>
 
-<script src="<%=request.getContextPath()%>/js/script.js"></script>
+<script src="<%=request.getContextPath()%>/assets/js/script.js"></script>
 
 </body>
 </html>
