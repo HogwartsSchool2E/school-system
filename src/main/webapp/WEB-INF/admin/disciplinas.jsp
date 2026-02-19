@@ -17,13 +17,13 @@
 <html>
 <head>
     <title>Gerenciamento de Disciplinas - Hogwarts</title>
-    <%-- Importação da fonte Poppins e dos arquivos CSS --%>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/modal.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/disciplinas.css"> <%-- Seu novo arquivo CSS --%>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/disciplinas.css">
 </head>
 <body>
 <main>
