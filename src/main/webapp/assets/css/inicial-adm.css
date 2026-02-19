@@ -1,0 +1,103 @@
+:root {
+    --cor-fundo-pagina: rgb(31, 39, 72);
+    --cor-fundo-card: rgba(31, 39, 72, 0.32);
+    --cor-texto-principal: #d4b057;
+    --cor-texto-secundario: #8f763c;
+    --cor-borda-card: #8f763c;
+    --cor-botao-fundo-hover: #d4b057;
+    --cor-botao-texto-hover: rgb(31, 39, 72);
+    --sombra-leve: rgba(0, 0, 0, 0.2);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: url("../../imagens/fundo-profe.png") no-repeat center center fixed;
+    background-size: cover;
+    color: var(--cor-texto-principal);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+main {
+    background-color: var(--cor-fundo-card);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px var(--sombra-leve);
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    border: 1px solid var(--cor-borda-card);
+}
+
+main h1 {
+    font-size: 2.5em;
+    font-family: 'Harry P', 'Poppins', sans-serif;
+    color: var(--cor-texto-principal);
+    margin-bottom: 0;
+}
+
+main p {
+    font-size: 1.2em;
+    color: var(--cor-texto-secundario);
+    margin-bottom: 15px;
+}
+
+section {
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--cor-borda-card);
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+section:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+section h3 {
+    font-size: 1.4em;
+    color: var(--cor-texto-principal);
+    margin: 0;
+    text-align: left;
+}
+
+section button {
+    width: 200px;
+    padding: 10px 0;
+    text-align: center;
+    font-size: 1em;
+    font-weight: 600;
+    color: var(--cor-texto-principal);
+    background-color: transparent;
+    border: 2px solid var(--cor-borda-card);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+section button:hover {
+    background-color: var(--cor-botao-fundo-hover);
+    color: var(--cor-botao-texto-hover);
+    border-color: var(--cor-botao-fundo-hover);
+    transform: translateY(-2px);
+}
+
+section button:active {
+    transform: translateY(0);
+}
