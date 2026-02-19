@@ -21,7 +21,12 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/modal.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/inicial-prof.css">
 </head>
 <body>
 <main>
@@ -29,7 +34,7 @@
     
     <h1>Olá, <%=nomeProf%>. Bem-vindo!</h1>
     <h2>Professor de <%=Formatador.mostrar(disciplina)%></h2>
-    <p>É professor de outra matéria?</p>
+    <p>É professor de outra disciplina?</p>
     <div class="modal">
         <button type="button" name="tipo" class="abre-modal astext" data-modal="modal-1">
             Clique aqui para ver suas disciplinas
