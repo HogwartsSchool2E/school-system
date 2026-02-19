@@ -20,10 +20,11 @@
 <head>
     <title>Title</title>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/modal.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/aluno.css">
 </head>
 <body>
 <main>
-    <%if (alunos != null && !alunos.isEmpty()){%>
+    <%if (alunos != null && !alunos.isEmpty()) {%>
     <table border="1">
         <thead>
         <tr>
@@ -35,15 +36,21 @@
         </tr>
         </thead>
 
-        <%int i = 0;
-            for (Aluno a : alunos){
-        String id = String.valueOf(i++);%>
+        <%
+            int i = 0;
+            for (Aluno a : alunos) {
+                String id = String.valueOf(i++);
+        %>
         <tbody>
         <tr>
-            <td><%=a.getNome()%></td>
-            <td><%=a.getCasaHogwarts().getNome()%></td>
-            <td><%=a.getCpf()%></td>
-            <td><%=a.getEmail()%></td>
+            <td><%=a.getNome()%>
+            </td>
+            <td><%=a.getCasaHogwarts().getNome()%>
+            </td>
+            <td><%=a.getCpf()%>
+            </td>
+            <td><%=a.getEmail()%>
+            </td>
 
             <td class="modal">
                 <button type="button" class="abre-modal" data-modal="modal-edita-<%=id%>">Editar</button>
@@ -52,13 +59,16 @@
                     <button class="fecha-modal" data-modal="modal-edita-<%=id%>">x</button>
 
                     <p>
-                        Aluno: <em><%=a.getNome()%></em><br>
-                        Email atual: <em><%=a.getEmail()%></em>
+                        Aluno: <em><%=a.getNome()%>
+                    </em><br>
+                        Email atual: <em><%=a.getEmail()%>
+                    </em>
                     </p>
 
                     <form method="post" action="aluno-servlet">
                         <label for="email">Digite o novo email</label>
-                        <input type="email" name="email" id="email" maxlength="50" pattern="^[a-z]+\.[a-z]+@hogwarts\.com$" required>
+                        <input type="email" name="email" id="email" maxlength="50"
+                               pattern="^[a-z]+\.[a-z]+@hogwarts\.com$" required>
 
                         <input type="hidden" name="matricula" value="<%=a.getMatricula()%>">
 
@@ -74,7 +84,8 @@
                     <button class="fecha-modal" data-modal="modal-exclui-<%=id%>">x</button>
 
                     <p>
-                        Aluno: <em><%=a.getNome()%></em><br>
+                        Aluno: <em><%=a.getNome()%>
+                    </em><br>
 
                         <strong>Atenção! Essa ação é irreversível.</strong>
                         <strong>Todas as notas e observações deste aluno serão excluídas.</strong>
@@ -105,10 +116,12 @@
                 <input type="text" name="aluno" id="aluno" maxlength="70">
 
                 <label for="cpf">Digite o CPF do aluno:</label>
-                <input type="text" name="cpf" id="cpf" maxlength="14" oninput="mascaraCpf(this)" pattern="^\d{3}\.\d{3}\.\d{3}-\d{2}$">
+                <input type="text" name="cpf" id="cpf" maxlength="14" oninput="mascaraCpf(this)"
+                       pattern="^\d{3}\.\d{3}\.\d{3}-\d{2}$">
 
                 <label for="email">Digite o email do aluno:</label>
-                <input type="email" name="email" id="email" maxlength="50" pattern="^[a-z]+\.[a-z]+@hogwarts\.com$" required>
+                <input type="email" name="email" id="email" maxlength="50" pattern="^[a-z]+\.[a-z]+@hogwarts\.com$"
+                       required>
 
                 <label for="senha">Digite a senha do aluno:</label>
                 <input type="password" name="senha" id="senha">
@@ -116,8 +129,9 @@
                 <label for="casa">Selecione uma casa de Hogwarts</label>
                 <select name="casa" id="casa">
                     <option value="">Selecione</option>
-                    <%for (CasaHogwarts c : casasHogwarts){%>
-                    <option value="<%=c.getId()%>"><%=c.getNome()%></option>
+                    <%for (CasaHogwarts c : casasHogwarts) {%>
+                    <option value="<%=c.getId()%>"><%=c.getNome()%>
+                    </option>
                     <%}%>
                 </select>
 
