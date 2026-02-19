@@ -16,7 +16,7 @@
 <head>
     <title>Painel do Administrador</title>
 
-    <!-- Carregamento das fontes do Google Fonts (se precisar) -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -37,8 +37,8 @@
     </section>
 
     <section>
-        <h3>Disciplinas</h3>
-        <button type="submit" form="f" name="tipo" value="disciplinas">Gerenciar disciplinas</button>
+        <h3>Disciplinas e Professores</h3>
+        <button type="submit" form="f" name="tipo" value="disciplinas">Gerenciar disciplinas e professores</button>
     </section>
 
     <section>

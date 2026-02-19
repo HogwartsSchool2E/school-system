@@ -16,13 +16,21 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <title>Gerenciamento de Disciplinas - Hogwarts</title>
+    <%-- Importação da fonte Poppins e dos arquivos CSS --%>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/modal.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/disciplinas.css"> <%-- Seu novo arquivo CSS --%>
 </head>
 <body>
 <main>
+    <h1>Gerenciamento de Disciplinas e Professores por Disciplina</h1>
+
     <%if (disciplinas != null && !disciplinas.isEmpty()){%>
-    <table border="1">
+    <table>
         <thead>
         <tr>
             <th>Matéria</th>
@@ -30,11 +38,10 @@
             <th colspan="2">Ações</th>
         </tr>
         </thead>
-
+        <tbody>
         <%int i = 0;
             for (Disciplina d : disciplinas){
                 String id = String.valueOf(i++);%>
-        <tbody>
         <tr>
             <td><%=Formatador.mostrar(d.getNome())%></td>
             <td><%=Formatador.mostrar(d.getProfessor().getNome())%></td>
@@ -42,7 +49,7 @@
                 String professorAtual = d.getProfessor().getNome();
                 if (d.getNome() != null){%>
             <td class="modal">
-                <button type="button" class="abre-modal" data-modal="modal-edita-<%=id%>">Editar matéria</button>
+                <button type="button" class="abre-modal" data-modal="modal-edita-<%=id%>">Alterar Professor</button>
 
                 <dialog id="modal-edita-<%=id%>">
                     <button class="fecha-modal" data-modal="modal-edita-<%=id%>">x</button>
@@ -53,17 +60,24 @@
                     </p>
 
                     <form method="post" action="disciplina-servlet">
-                        <label for="id-prof">Selecione o novo professor:</label>
-                        <select name="id-prof" id="id-prof" required>
+                        <label for="id-prof-<%=id%>">Selecione o novo professor:</label>
+                        <select name="id-prof" id="id-prof-<%=id%>" required> <%-- ID único para cada select --%>
                             <option value="">Selecione</option>
                             <%for (Disciplina di : disciplinas) {
-                            String nome = (di.getProfessor() != null) ? di.getProfessor().getNome() : null;
-                            Integer idProf = (di.getProfessor() != null) ? di.getProfessor().getId() : null;
+                                String nome = (di.getProfessor() != null) ? di.getProfessor().getNome() : null;
+                                Integer idProf = (di.getProfessor() != null) ? di.getProfessor().getId() : null;
 
                                 if (idProf != null && nome != null && !Objects.equals(nome, professorAtual)){
+                                    // Verifica se o professor já foi adicionado ao mapa para evitar duplicatas visuais
+                                    if (!profJaMostrados.containsKey(idProf)) {
+                                        profJaMostrados.put(idProf, nome);
                             %>
                             <option value="<%=di.getProfessor().getId()%>"><%=di.getProfessor().getNome()%></option>
-                            <%}}%>
+                            <%      }
+                            }
+                            }
+                                profJaMostrados.clear(); // Limpa para a próxima iteração
+                            %>
                         </select>
 
                         <input type="hidden" name="id-disc" value="<%=d.getId()%>">
@@ -85,14 +99,14 @@
                         Disciplina: <em><%=Formatador.mostrar(d.getNome())%></em><br>
                         Professor atual: <em><%=professorAtual%></em>
 
-                        <strong>Atenção! Essa ação é irreversível. Você talvez precise realocar um novo professor para esta matéria.</strong>
-                        <strong>Caso o professor seja gestor de uma casa será preciso realocá-lo também.</strong>
+                        <strong>Atenção! Essa ação é irreversível. Você talvez precise alocar um novo professor para esta matéria.</strong>
+                        <strong>Caso o professor seja gestor de uma casa, será preciso alocar um novo professor para essa função também.</strong>
                         <strong>Todas as observações deste professor serão excluídas.</strong>
                     </p>
 
                     <form action="disciplina-servlet" method="post">
-                        <label for="acao">Você tem certeza que quer excluir esse professor?</label>
-
+                        <label for="confirma-exclusao-<%=id%>">Você tem certeza que quer excluir esse professor?</label>
+                        <%-- Adicionei um ID para a label --%>
                         <input type="hidden" name="idProf" value="<%=d.getProfessor().getId()%>">
 
                         <button type="submit" name="acao" value="excluirProf">Sim</button>
@@ -102,66 +116,69 @@
             </td>
             <%}%>
         </tr>
-        </tbody>
         <%}%>
+        </tbody>
     </table>
 
-    <div class="modal">
-        <button type="button" class="abre-modal" data-modal="modal-add-disc">Adicionar Disciplina</button>
+    <%-- Novo contêiner para os botões "Adicionar" --%>
+    <div class="modal-buttons-container">
+        <div class="modal">
+            <button type="button" class="abre-modal" data-modal="modal-add-disc">Adicionar Disciplina</button>
 
-        <dialog id="modal-add-disc">
-            <button class="fecha-modal" data-modal="modal-add-disc">x</button>
+            <dialog id="modal-add-disc">
+                <button class="fecha-modal" data-modal="modal-add-disc">x</button>
 
-            <form method="post" action="disciplina-servlet">
-                <label for="disciplina">Digite o nome da disciplina:</label>
-                <input type="text" name="disciplina" id="disciplina" maxlength="50">
+                <form method="post" action="disciplina-servlet">
+                    <label for="disciplina">Digite o nome da disciplina:</label>
+                    <input type="text" name="disciplina" id="disciplina" maxlength="50" required>
 
-                <label for="professor">Selecione o novo professor:</label>
-                <select name="professor" id="professor" required>
-                    <option value="">Selecione</option>
-                    <%
-                    for (Disciplina di : disciplinas){
-                        if (di.getProfessor().getNome() != null){
-                            int id = di.getProfessor().getId();
-                            String nome = di.getProfessor().getNome();
+                    <label for="professor-add-disc">Selecione o professor:</label>
+                    <select name="professor" id="professor-add-disc" required>
+                        <option value="">Selecione</option>
+                        <%
+                            // Popula o HashMap de profs para o modal de adicionar disciplina
+                            for (Disciplina di : disciplinas){
+                                if (di.getProfessor() != null){
+                                    int id = di.getProfessor().getId();
+                                    String nome = di.getProfessor().getNome();
+                                    if (!profJaMostrados.containsKey(id)) profJaMostrados.put(id, nome);
+                                }
+                            }
+                            for (Map.Entry<Integer, String> p : profJaMostrados.entrySet()){%>
+                        <option value="<%=p.getKey()%>"><%=p.getValue()%></option>
+                        <%}
+                            profJaMostrados.clear(); // Limpa após o uso
+                        %>
+                    </select>
 
-                            if (!profJaMostrados.containsKey(id)) profJaMostrados.put(id, nome);
-                        }
-                    }
+                    <button type="submit" name="acao" value="inserirDisc">Enviar dados</button>
+                </form>
+            </dialog>
+        </div>
 
-                    for (Map.Entry<Integer, String> p : profJaMostrados.entrySet()){%>
-                    <option value="<%=p.getKey()%>"><%=p.getValue()%></option>
-                    <%} %>
-                </select>
+        <div class="modal">
+            <button type="button" class="abre-modal" data-modal="modal-add-prof">Adicionar Professor</button>
 
-                <button type="submit" name="acao" value="inserirDisc">Enviar dados</button>
-            </form>
-        </dialog>
+            <dialog id="modal-add-prof">
+                <button class="fecha-modal" data-modal="modal-add-prof">x</button>
+
+                <form method="post" action="disciplina-servlet">
+                    <label for="professor-nome-add">Digite o nome do professor:</label>
+                    <input type="text" name="professor" id="professor-nome-add" maxlength="70" required>
+
+                    <label for="usuario-add-prof">Digite o nome do usuário:</label>
+                    <input type="text" name="usuario" id="usuario-add-prof" maxlength="50" pattern="^[a-z]+\.[a-z]+$" required>
+
+                    <label for="senha-add-prof">Digite a senha:</label>
+                    <input type="password" name="senha" id="senha-add-prof" required>
+
+                    <button type="submit" name="acao" value="inserirProf">Enviar dados</button>
+                </form>
+            </dialog>
+        </div>
     </div>
 
-    <div class="modal">
-        <button type="button" class="abre-modal" data-modal="modal-add-prof">Adicionar Professor</button>
-
-        <dialog id="modal-add-prof">
-            <button class="fecha-modal" data-modal="modal-add-prof">x</button>
-
-            <form method="post" action="disciplina-servlet">
-                <label for="professor">Digite o nome do professor:</label>
-                <input type="text" name="professor" id="professor" maxlength="70" required>
-
-                <label for="usuario">Digite o nome do usuário:</label>
-                <input type="text" name="usuario" id="usuario" maxlength="50" pattern="^[a-z]+\.[a-z]+$" required>
-
-                <label for="senha">Digite a senha:</label>
-                <input type="password" name="senha" id="senha" required>
-
-                <button type="submit" name="acao" value="inserirProf">Enviar dados</button>
-            </form>
-        </dialog>
-    </div>
-
-
-    <%} else {%> <p>Nenhuma disciplina encontrada.</p> <%}%>
+    <%} else {%> <p>Nenhuma disciplina encontrada. Que tal adicionar uma?</p> <%}%>
 </main>
 
 <script src="<%=request.getContextPath()%>/assets/js/script.js"></script>
