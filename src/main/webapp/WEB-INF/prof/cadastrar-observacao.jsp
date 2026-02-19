@@ -19,7 +19,12 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/modal.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/observacoes.css">
 </head>
 <body>
 <main>
@@ -30,8 +35,8 @@
                 <th>Aluno</th>
                 <th>Casa</th>
                 <th>Disciplina</th>
-                <th>Observação</th>
-                <th colspan="2">Ações</th>
+                <th>Observacao</th>
+                <th colspan="2">Acoes</th>
             </tr>
         </thead>
 

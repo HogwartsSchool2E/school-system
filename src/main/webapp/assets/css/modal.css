@@ -4,20 +4,71 @@
     --sombra-escura: rgba(0,0,0,.5);
     --marrom-escuro: rgba(255, 168, 0, .14);
     --marrom-claro: rgba(255, 168, 0, .35);
-    --azul-link: blue;
-    --branco-fundo: white;
+    --azul-link: #8f763c;
+    --branco-fundo: #8f763c;
     --cinza-fundo: #111;
     --botao-nao-fundo: rgba(220, 38, 38, .10);
     --botao-nao-borda: rgba(220, 38, 38, .5);
     --botao-nao-texto: #7f1d1d;
 }
 
-*{
+* {
+    font-family: 'Poppins', sans-serif;
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url("../../imagens/fundo-profe.png");
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+}
+
+main > p {
+    font-size: 1.5em;
+    color: var(--branco-fundo);
+    margin-top: 10px;
+    border-color: #8f763c;
+}
+
+main form {
+    width: 100%;
+    text-align: center;
+}
+
+main form input[type="submit"] {
+    width: 60%;
+    padding: 10px 15px;
+    font-size: 1em;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    border: 1px solid var(--sombra-escura);
+    background: var(--cinza-fundo);
+    color: var(--branco-fundo);
+    cursor: pointer;
+}
+
+main form input[type="submit"]:hover {
+    filter: brightness(1.2);
 }
 
 .modal{
     vertical-align: middle;
+    width: 100%;
+    text-align: center;
 }
 
 td.modal{
@@ -28,18 +79,27 @@ td.modal{
     cursor: pointer;
     border: 1px solid var(--sombra);
     background: var(--branco-fundo);
-    padding: 10px 14px;
-    border-radius: 10px;
+    padding: 10px 15px;
+    border-radius: 15px;
     font-weight: 600;
     line-height: 1;
+    font-size: 1.2em;
+    width: 60%;
+    display: block;
+    margin: 10px auto;
+    box-shadow: 0 4px 6px var(--sombra);
+    transition: all 0.3s ease;
 }
 
 .abre-modal:hover{
     filter: brightness(0.95);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px var(--sombra-escura);
 }
 
 .abre-modal:active{
     transform: translateY(1px);
+    box-shadow: 0 2px 4px var(--sombra);
 }
 
 .abre-modal.astext{
@@ -61,9 +121,16 @@ dialog{
     padding: 20px 20px 15px;
     border-radius: 15px;
     box-shadow: 0 20px 50px var(--sombra);
-    position: relative;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     color: var(--cinza-fundo);
-    width: min(520px, calc(100vw - 24px));
+    width: 80%;
+    max-width: 600px;
+    height: auto;
+    min-height: 200px;
+    z-index: 1000;
 }
 
 dialog > p{
@@ -100,8 +167,8 @@ dialog > .fecha-modal {
     position: absolute;
     top: 10px;
     right: 10px;
-    width: 35px;
-    height: 35px;
+    width: 25px;
+    height: 25px;
 }
 
 dialog > .fecha-modal:hover{
@@ -163,8 +230,8 @@ dialog button{
 dialog form button{
     border-radius: 10px;
     border: 1px solid var(--sombra);
-    padding: 10px 15px;
-    font-weight: 700;
+    padding: 8px 12px;
+    font-weight: 600;
     margin-top: 15px;
 }
 
@@ -193,10 +260,9 @@ dialog form button[value="excluir"]{
 
 dialog .ajuste{
     margin: 10px 10px 0 0;
-    padding: 10px 15px;
+    padding: 8px 12px;
     border-radius: 10px;
     border: 1px solid var(--sombra);
     background: var(--branco-fundo);
     font-weight: 800;
 }
-

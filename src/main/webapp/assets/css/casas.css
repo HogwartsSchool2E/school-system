@@ -1,0 +1,276 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: rgb(143, 118, 60);
+    --secondary-color: rgb(143, 118, 60);
+    --accent-color: #FFD700;
+    --text-color: #8f763c;
+    --light-text-color: #000000;
+    --background-light: rgba(31, 39, 72, 0.53);
+    --button-danger: #7e2020;
+    --button-danger-hover: #d4b057;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+    --table-bg-odd: rgba(31, 39, 72, 0.53);
+    --table-bg-even: #26294b;
+    --table-hover-bg: #161725;
+    --main-bg: rgba(31, 39, 72, 0.32);
+    --dialog-bg: rgba(31, 39, 72, 0.95);
+    --dialog-text-color: #e0e0e0;
+    --input-bg: rgba(36, 39, 70, 0.8);
+    --input-text-color: var(--light-text-color);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-light);
+    color: var(--text-color);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+    padding-top: 50px;
+}
+
+main {
+    background-color: var(--main-bg);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    max-width: 1100px;
+    width: 90%;
+    text-align: center;
+    border: 2px solid var(--primary-color);
+}
+
+h1 {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-color);
+    font-size: 2.8em;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    font-weight: 700;
+}
+
+p {
+    font-size: 1.1em;
+    color: var(--text-color);
+    margin-bottom: 30px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 30px 0;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+thead {
+    background-color: var(--primary-color);
+    color: var(--light-text-color);
+}
+
+th {
+    font-family: 'Poppins', sans-serif;
+    padding: 15px;
+    text-align: left;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+th:nth-child(4) {
+    text-align: center;
+}
+
+tbody tr {
+    background-color: var(--table-bg-odd);
+    border-bottom: 1px solid var(--table-bg-odd);
+}
+
+tbody tr:nth-child(even) {
+    background-color: var(--table-bg-even);
+}
+
+tbody tr:hover {
+    background-color: var(--table-hover-bg);
+}
+
+td {
+    padding: 12px 15px;
+    text-align: left;
+    vertical-align: middle;
+    color: var(--text-color);
+}
+
+td.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+button {
+    background-color: var(--primary-color);
+    color: var(--light-text-color);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    min-width: 150px;
+    white-space: nowrap;
+}
+
+button:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+dialog form button[type="submit"] {
+    background-color: var(--primary-color);
+    color: var(--light-text-color);
+    margin-top: 15px;
+    min-width: 180px;
+}
+
+dialog form button[type="submit"]:hover {
+    background-color: var(--secondary-color);
+}
+
+dialog form button[type="button"] {
+    background-color: var(--secondary-color);
+    color: var(--light-text-color);
+}
+
+dialog form button[type="button"]:hover {
+    background-color: var(--primary-color);
+}
+
+dialog {
+    border: 2px solid var(--primary-color);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    background-color: var(--dialog-bg);
+    max-width: 500px;
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+}
+
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+dialog .fecha-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    color: var(--light-text-color);
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    padding: 0;
+    box-shadow: none;
+}
+
+dialog .fecha-modal:hover {
+    color: var(--primary-color);
+    background-color: transparent;
+    transform: none;
+    box-shadow: none;
+}
+
+dialog p {
+    color: var(--dialog-text-color);
+    margin-bottom: 20px;
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+dialog p em {
+    font-style: normal;
+    color: var(--accent-color);
+    font-weight: 500;
+}
+
+dialog p strong {
+    color: var(--button-danger);
+    display: block;
+    margin-top: 10px;
+}
+
+dialog form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+dialog label {
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+dialog input[type="text"],
+dialog select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--input-bg);
+    color: var(--input-text-color);
+}
+
+dialog input[type="text"]:focus,
+dialog select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3);
+}
+
+dialog form button.ajuste {
+    background-color: var(--secondary-color);
+    color: var(--light-text-color);
+    min-width: 60px;
+    padding: 8px 15px;
+    font-size: 0.9em;
+    margin: 5px;
+}
+
+dialog form button.ajuste:hover {
+    background-color: var(--primary-color);
+}
+
+dialog form p span.pontuacao {
+    font-size: 1.2em;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin-bottom: 15px;
+    display: block;
+}
