@@ -22,10 +22,11 @@
 <head>
     <title>Title</title>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/modal.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/casas.css">
 </head>
 <body>
 <main>
-    <%if (casasHogwarts != null && !casasHogwarts.isEmpty()){%>
+    <%if (casasHogwarts != null && !casasHogwarts.isEmpty()) {%>
     <table border="1">
         <thead>
         <tr>
@@ -36,44 +37,54 @@
         </tr>
         </thead>
 
-        <%int i = 0;
-            for (CasaHogwarts c : casasHogwarts){
-            String id = String.valueOf(i++);%>
+        <%
+            int i = 0;
+            for (CasaHogwarts c : casasHogwarts) {
+                String id = String.valueOf(i++);
+        %>
         <tbody>
         <tr>
-            <td><%=c.getNome()%></td>
-            <td><%=c.getPontuacao()%></td>
-            <td><%=Formatador.mostrar(c.getProfessor().getNome())%></td>
+            <td><%=c.getNome()%>
+            </td>
+            <td><%=c.getPontuacao()%>
+            </td>
+            <td><%=Formatador.mostrar(c.getProfessor().getNome())%>
+            </td>
             <td class="modal">
                 <button type="button" class="abre-modal" data-modal="modal-edita-<%=id%>">Editar</button>
 
                 <dialog id="modal-edita-<%=id%>">
                     <button class="fecha-modal" data-modal="modal-edita-<%=id%>">x</button>
 
-                    <p>Antigo professor: <em><%=Formatador.mostrar(c.getProfessor().getNome())%></em></p>
+                    <p>Antigo professor: <em><%=Formatador.mostrar(c.getProfessor().getNome())%>
+                    </em></p>
 
                     <form method="post" action="casa-servlet">
                         <label for="professor-novo-id">Selecione o novo professor:</label>
                         <select name="professor-novo-id" id="professor-novo-id" required>
                             <option value="">Selecione</option>
 
-                            <%Integer idAtual = (c.getProfessor() == null) ? null : c.getProfessor().getId();
+                            <%
+                                Integer idAtual = (c.getProfessor() == null) ? null : c.getProfessor().getId();
 
-                            for (Disciplina d : professores){
-                                if (d.getProfessor() != null && d.getProfessor().getNome() != null){
-                                    int idProf = d.getProfessor().getId();
-                                    String nome = d.getProfessor().getNome();
+                                for (Disciplina d : professores) {
+                                    if (d.getProfessor() != null && d.getProfessor().getNome() != null) {
+                                        int idProf = d.getProfessor().getId();
+                                        String nome = d.getProfessor().getNome();
 
-                                    if (idAtual == null || idProf != idAtual){
-                                        if (!profJaMostrados.containsKey(idProf)){
-                                            profJaMostrados.put(idProf, nome);
+                                        if (idAtual == null || idProf != idAtual) {
+                                            if (!profJaMostrados.containsKey(idProf)) {
+                                                profJaMostrados.put(idProf, nome);
+                                            }
                                         }
                                     }
                                 }
-                            }
 
-                            for (Map.Entry<Integer, String> p : profJaMostrados.entrySet()){%>
-                            <option value="<%=p.getKey()%>"><%=p.getValue()%></option><%}%>
+                                for (Map.Entry<Integer, String> p : profJaMostrados.entrySet()) {
+                            %>
+                            <option value="<%=p.getKey()%>"><%=p.getValue()%>
+                            </option>
+                            <%}%>
                         </select>
 
                         <input type="hidden" name="professor-antigo-id" value="<%=c.getProfessor().getId()%>">
@@ -89,7 +100,8 @@
                 <dialog id="modal-ponto-<%=id%>">
                     <button class="fecha-modal" data-modal="modal-ponto-<%=id%>">x</button>
 
-                    <p>Antiga pontuação: <em><%=c.getPontuacao()%></em></p>
+                    <p>Antiga pontuação: <em><%=c.getPontuacao()%>
+                    </em></p>
 
                     <form method="post" action="casa-servlet">
                         <label>Pontuação após alteração:</label>
