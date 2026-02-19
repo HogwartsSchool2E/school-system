@@ -18,7 +18,7 @@
 <head>
     <title>Title</title>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/modal.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/disciplinas.css"> <%-- Adicione esta linha para o CSS --%>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/disciplinas.css">
 </head>
 <body>
 <main>
@@ -160,6 +160,7 @@
             </form>
         </dialog>
     </div>
+
 
     <%} else {%> <p>Nenhuma disciplina encontrada.</p> <%}%>
 </main>
