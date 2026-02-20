@@ -62,6 +62,8 @@ public class DisciplinaDAO {
             pstmt.setInt(1, idDisciplina);
             pstmt.setInt(2, idProfNovo);
             pstmt.setInt(3, idDisciplina);
+
+            pstmt.executeUpdate();
         }
     }
 
@@ -75,6 +77,8 @@ public class DisciplinaDAO {
             pstmt.setString(1, professor.getNome());
             pstmt.setString(2, professor.getUsuario());
             pstmt.setString(3, Hash.hashSenha(professor.getSenha()));
+
+            pstmt.executeUpdate();
         }
     }
 
@@ -152,6 +156,8 @@ public class DisciplinaDAO {
             pstmt.setInt(2, idProfessor);
             pstmt.setInt(3, idProfessor);
             pstmt.setInt(4, idProfessor);
+
+            pstmt.executeUpdate();
         }
     }
 

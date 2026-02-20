@@ -36,6 +36,7 @@ public class DisciplinaServlet extends HttpServlet {
                 default:
                     req.setAttribute("mensagemErro", "Não foi possível concluir sua solicitação.");
                     req.getRequestDispatcher("WEB-INF/pagina-erro.jsp").forward(req, resp);
+                    break;
             }
 
             resp.sendRedirect(req.getContextPath() + "/admin-servlet?tipo=disciplinas");
