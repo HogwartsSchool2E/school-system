@@ -21,16 +21,12 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <style>
-        .astext {
-            color: blue;
-            border:none;
-            margin:0;
-            padding:0;
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/modal.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/inicial-prof.css">
 </head>
 <body>
 <main>
@@ -38,7 +34,7 @@
     
     <h1>Olá, <%=nomeProf%>. Bem-vindo!</h1>
     <h2>Professor de <%=Formatador.mostrar(disciplina)%></h2>
-    <p>É professor de outra matéria?</p>
+    <p>É professor de outra disciplina?</p>
     <div class="modal">
         <button type="button" name="tipo" class="abre-modal astext" data-modal="modal-1">
             Clique aqui para ver suas disciplinas
@@ -83,7 +79,9 @@
         </button>
 
         <dialog id="modal-2">
-            <button type="button" class="fecha-modal" data-modal="modal-2">x</button>
+            <button type="button" class="fecha-modal" data-modal="modal-2">
+                <img src="<%=request.getContextPath()%>/assets/icons/fecha.webp" alt="Sair">
+            </button>
 
             <form action="boletim-servlet" method="get">
                 <div>
@@ -123,7 +121,7 @@
         </dialog>
     </div>
 </main>
-<script src="<%=request.getContextPath()%>/js/script.js" defer></script>
+<script src="<%=request.getContextPath()%>/assets/js/script.js" defer></script>
 
 </body>
 </html>

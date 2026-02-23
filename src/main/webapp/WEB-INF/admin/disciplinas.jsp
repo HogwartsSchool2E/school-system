@@ -17,6 +17,8 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/modal.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/disciplinas.css">
 </head>
 <body>
 <main>
@@ -56,8 +58,8 @@
                         <select name="id-prof" id="id-prof" required>
                             <option value="">Selecione</option>
                             <%for (Disciplina di : disciplinas) {
-                            String nome = (di.getProfessor() != null) ? di.getProfessor().getNome() : null;
-                            Integer idProf = (di.getProfessor() != null) ? di.getProfessor().getId() : null;
+                                String nome = (di.getProfessor() != null) ? di.getProfessor().getNome() : null;
+                                Integer idProf = (di.getProfessor() != null) ? di.getProfessor().getId() : null;
 
                                 if (idProf != null && nome != null && !Objects.equals(nome, professorAtual)){
                             %>
@@ -119,16 +121,16 @@
                 <select name="professor" id="professor" required>
                     <option value="">Selecione</option>
                     <%
-                    for (Disciplina di : disciplinas){
-                        if (di.getProfessor().getNome() != null){
-                            int id = di.getProfessor().getId();
-                            String nome = di.getProfessor().getNome();
+                        for (Disciplina di : disciplinas){
+                            if (di.getProfessor().getNome() != null){
+                                int id = di.getProfessor().getId();
+                                String nome = di.getProfessor().getNome();
 
-                            if (!profJaMostrados.containsKey(id)) profJaMostrados.put(id, nome);
+                                if (!profJaMostrados.containsKey(id)) profJaMostrados.put(id, nome);
+                            }
                         }
-                    }
 
-                    for (Map.Entry<Integer, String> p : profJaMostrados.entrySet()){%>
+                        for (Map.Entry<Integer, String> p : profJaMostrados.entrySet()){%>
                     <option value="<%=p.getKey()%>"><%=p.getValue()%></option>
                     <%} %>
                 </select>
@@ -163,7 +165,7 @@
     <%} else {%> <p>Nenhuma disciplina encontrada.</p> <%}%>
 </main>
 
-<script src="<%=request.getContextPath()%>/js/script.js"></script>
+<script src="<%=request.getContextPath()%>/assets/js/script.js"></script>
 
 </body>
 </html>
