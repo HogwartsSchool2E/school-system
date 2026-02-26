@@ -1,0 +1,103 @@
+:root {
+    --cor-fundo-pagina: #8f763c;
+    --cor-texto-principal: #d4b057;
+    --cor-secundaria: #8f763c;
+    --cor-destaque: #8f763c;
+    --borda-padrao: rgba(31, 39, 72, 0.76);
+    --sombra-leve: rgba(0, 0, 0, 0.1);
+}
+
+body {
+    background: url("../../imagens/fundo-profe.png");
+    color: var(--cor-texto-principal);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+main {
+    background-color: rgba(31, 39, 72, 0.53);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px var(--sombra-leve);
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+h1 {
+    font-family: 'Harry P';
+    color: var(--cor-destaque);
+    font-size: 2.5em;
+    margin-bottom: 15px;
+}
+
+h2 {
+    font-family: 'Poppins';
+    color: var(--cor-secundaria);
+    font-size: 1.8em;
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--borda-padrao);
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+form button[type="submit"] {
+    font-family: 'Arial';
+    background-color: var(--cor-destaque);
+    color: rgba(0, 0, 0, 0.53);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 15px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 10px 5px;
+}
+
+form button[type="submit"]:hover {
+    background-color: #d4b057;
+    transform: translateY(-2px);
+}
+
+form button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px var(--sombra-leve);
+}
+
+th, td {
+    border: 1px solid var(--borda-padrao);
+    padding: 12px 15px;
+    text-align: left;
+}
+
+th {
+    background-color: #80268a;
+    font-weight: bold;
+    color: var(--cor-texto-principal);
+}
+
+tr:nth-child(even) {
+    background-color: rgba(31, 39, 72, 0.53);
+}
+
+tr:hover {
+    background-color: rgba(31, 39, 72, 0.53);
+}
