@@ -61,7 +61,7 @@ public class ObservacaoDAO {
         Connection conn = conexao.conectar();
         int retorno = 0;
         try{
-            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM observacao" +
+            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM observacao " +
                     "WHERE ID IN (" +
                     "    SELECT o.ID" +
                     "    FROM OBSERVACAO o" +
