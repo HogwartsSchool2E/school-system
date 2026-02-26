@@ -4,9 +4,12 @@ import com.hogwarts.model.*;
 import com.hogwarts.model.banco.*;
 import com.hogwarts.utils.Conexao;
 
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Scanner;
 
 public class AlunoDAO {
 
@@ -144,5 +147,76 @@ public class AlunoDAO {
             conexao.desconectar(conn);
         }
         return retorno;
+    }
+
+    // Validar cpf
+    public static boolean validarCpf(String cpf){
+        String caminho = "src/main/java/com/hogwarts/dao/cpfs.txt";
+        File arquivo = new File(caminho);
+
+        List<String> texto = new ArrayList<>();
+        int contador = 0;
+
+        try{
+            Scanner inFile = new Scanner(arquivo);
+
+            while(inFile.hasNextLine()){
+                String linha = inFile.nextLine();
+                texto.add(linha);
+            }
+
+            inFile.close();
+            BufferedWriter bw = new BufferedWriter(new FileWriter(arquivo));
+
+            if(texto.contains(cpf)){
+                texto.remove(cpf);
+                while(contador < texto.size()){
+                    bw.write(texto.get(contador));
+                    bw.newLine();
+                    contador ++;
+                }
+                return true;
+            }
+
+            bw.close();
+
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // Método cadastrar alunos (admin)
+
+    public boolean cadastrar(Aluno aluno) throws SQLException, ClassNotFoundException {
+        Conexao conexao = new Conexao();
+        Connection conn = conexao.conectar();
+        int retorno = 0;
+        if (validarCpf(aluno.getCpf())){
+            try {
+                PreparedStatement pstmt = conn.prepareStatement("INSERT INTO ALUNO(NOME, CPF, EMAIL, SENHA, COD_CASA) VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+                pstmt.setString(1, aluno.getNome());
+                pstmt.setString(2, aluno.getCpf());
+                pstmt.setString(3, aluno.getEmail());
+                pstmt.setString(4, aluno.getSenha());
+                pstmt.setInt(5, aluno.getCasaHogwarts().getId());
+                retorno = pstmt.executeUpdate();
+                if (retorno > 0) {
+                    ResultSet rs = pstmt.getGeneratedKeys();
+                    if (rs.next()) {
+                        int matricula = rs.getInt(1);
+                        aluno.setMatricula(matricula);
+                    }
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                conexao.desconectar(conn);
+            }
+        }
+        return retorno > 0;
     }
 }
