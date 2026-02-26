@@ -1,0 +1,138 @@
+:root {
+    --cor-fundo-pagina: #e6f2f9;
+    --cor-texto-principal: rgb(143, 118, 60);
+    --cor-secundaria: #8f763c;
+    --cor-destaque: #d4b057;
+    --cor-borda-card: #8f763c;
+    --cor-fundo-card: rgba(31, 39, 72, 0.53);
+    --sombra-leve: rgba(0, 0, 0, 0.15);
+}
+
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: url("../../imagens/fundo-profe.png") no-repeat center center fixed;
+    background-size: cover;
+    color: var(--cor-texto-principal);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+main {
+    background-color: var(--cor-fundo-card);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px var(--sombra-leve);
+    max-width: 700px;
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-height: 90vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+main h1 {
+    font-size: 2.2em;
+    color: var(--cor-destaque);
+    margin-bottom: 5px;
+}
+
+main h2 {
+    font-size: 1.5em;
+    color: var(--cor-secundaria);
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--cor-borda-card);
+    padding-bottom: 8px;
+    display: inline-block;
+}
+
+main h3 {
+    font-size: 1.3em;
+    color: var(--cor-destaque);
+    margin-top: 25px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--cor-borda-card);
+    padding-bottom: 5px;
+    width: 100%;
+}
+
+main p {
+    font-size: 1.1em;
+    color: var(--cor-texto-principal);
+    margin-bottom: 10px;
+}
+
+main > strong {
+    display: block;
+    text-align: center;
+    font-size: 1.1em;
+    color: var(--cor-secundaria);
+    width: 90%;
+    margin: 0 auto;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--cor-borda-card);
+}
+
+main > strong:last-of-type {
+    border-bottom: none;
+}
+
+main > strong strong {
+    color: var(--cor-destaque);
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+main > br {
+    display: none;
+}
+
+main section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 0;
+}
+
+main section > div.modal {
+    display: inline-block;
+    width: auto;
+    flex-grow: 1;
+    max-width: 45%;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--cor-borda-card);
+    width: 80%;
+    margin: 30px auto;
+}
+
+main .abre-modal {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 0.95em;
+    margin: 0;
+    display: block;
+}
+
+td.modal {
+    text-align: center;
+}

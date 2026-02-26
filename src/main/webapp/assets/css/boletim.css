@@ -1,0 +1,139 @@
+:root {
+    --cor-fundo-pagina: #3a426c;
+    --cor-texto-principal: #8f763c;
+    --cor-cabecalho-tabela: rgb(36, 39, 70);
+    --cor-borda-tabela: rgb(143, 118, 60);
+    --cor-fundo-main: rgba(31, 39, 72, 0.53);
+    --sombra-leve: rgba(0, 0, 0, 0.1);
+}
+
+* {
+    font-family: 'Arial' ;
+}
+
+body {
+    background: url("../../imagens/fundo-profe.png") no-repeat center center fixed !important;
+    background-size: cover !important;
+    color: var(--cor-texto-principal) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    min-height: 100vh !important;
+    overflow: hidden !important;
+}
+
+main {
+    background-color: var(--cor-fundo-main) !important;
+    padding: 30px !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 15px var(--sombra-leve) !important;
+    max-width: 1400px !important;
+    width: 100% !important;
+    text-align: center !important;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    height: 90vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+p {
+    font-size: 1.1em !important;
+    line-height: 1.6 !important;
+    margin-bottom: 15px !important;
+}
+
+.table-wrapper {
+    overflow-y: auto !important;
+    max-height: 100% !important;
+    margin-top: 20px !important;
+    flex-grow: 1 !important;
+}
+
+table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    box-shadow: 0 2px 8px var(--sombra-leve) !important;
+    background-color: rgba(31, 39, 72, 0.53) !important;
+    table-layout: fixed !important;
+}
+
+th, td {
+    border: 1px solid var(--cor-borda-tabela) !important;
+    padding: 12px 10px !important;
+    text-align: left !important;
+    word-wrap: break-word !important;
+    vertical-align: middle !important;
+    font-size: 0.9em !important;
+}
+
+th {
+    background-color: var(--cor-cabecalho-tabela) !important;
+    color: #8f763c !important;
+    font-weight: bold !important;
+    text-transform: uppercase !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10 !important;
+    font-size: 1em !important;
+    padding: 15px 10px !important;
+}
+
+tr:nth-child(even) {
+    background-color: #242746 !important;
+}
+
+tr:hover {
+    background-color: rgba(31, 39, 72, 0.76) !important;
+}
+
+td strong {
+    font-weight: bold !important;
+}
+
+table th:nth-child(1), table td:nth-child(1) { width: 12% !important; }
+table th:nth-child(2), table td:nth-child(2) { width: 7% !important; }
+table th:nth-child(3), table td:nth-child(3) { width: 9% !important; }
+table th:nth-child(4), table td:nth-child(4) { width: 8% !important; }
+table th:nth-child(5), table td:nth-child(5) { width: 6% !important; text-align: center !important;}
+table th:nth-child(6), table td:nth-child(6) { width: 6% !important; text-align: center !important;}
+table th:nth-child(7), table td:nth-child(7) { width: 6% !important; text-align: center !important;}
+table th:nth-child(8), table td:nth-child(8) { width: 18% !important; }
+table th:nth-child(9), table td:nth-child(9) { width: 9% !important; text-align: center !important;}
+table th:nth-child(10), table td:nth-child(10) {
+    width: 17% !important;
+    text-align: center !important;
+}
+
+table td:nth-child(10) .modal {
+    display: inline-block !important;
+    width: auto !important;
+    margin: 0 2px !important;
+}
+
+table td .abre-modal {
+    width: auto !important;
+    padding: 6px 10px !important;
+    font-size: 0.8em !important;
+    display: inline-block !important;
+    margin: 3px 2px !important;
+}
+
+table td[colspan="3"] {
+    text-align: center !important;
+}
+table td[colspan="3"] .abre-modal {
+    width: auto !important;
+    padding: 8px 15px !important;
+    font-size: 0.9em !important;
+}
+
+table td.modal[colspan="3"] .abre-modal {
+    width: auto !important;
+    padding: 8px 15px !important;
+    font-size: 0.9em !important;
+}

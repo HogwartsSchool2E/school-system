@@ -3,8 +3,14 @@
   <component name="WebContextManager">
     <option name="state">
       <map>
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/admin/alunos.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/admin" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/admin/casas.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/admin" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/admin/disciplinas.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/admin" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/boletim-todos.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/dashboard.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/prof/boletim-individual.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/prof" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/prof/boletim-todos.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/prof" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/index.html" value="file://$PROJECT_DIR$/src/main/webapp" />
       </map>
     </option>
   </component>
