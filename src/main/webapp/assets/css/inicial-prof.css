@@ -8,7 +8,7 @@
 }
 
 body {
-    background: url("../../imagens/fundo-profe.png");
+    background: url("../images/fundo-profe.png");
     color: var(--cor-texto-principal);
     margin: 0;
     padding: 20px;

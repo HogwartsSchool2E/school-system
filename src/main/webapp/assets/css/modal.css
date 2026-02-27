@@ -24,7 +24,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url("../../imagens/fundo-profe.png");
+    background: url("../images/fundo-profe.png");
 }
 
 main {

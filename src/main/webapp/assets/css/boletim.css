@@ -12,7 +12,7 @@
 }
 
 body {
-    background: url("../../imagens/fundo-profe.png") no-repeat center center fixed !important;
+    background: url("../images/fundo-profe.png") no-repeat center center fixed !important;
     background-size: cover !important;
     color: var(--cor-texto-principal) !important;
     margin: 0 !important;

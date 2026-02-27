@@ -45,7 +45,7 @@
           rel="stylesheet">
 
 
-    <link rel="stylesheet" type="text/css" href="css/<%= nomeDoCss %>">
+    <link rel="stylesheet" type="text/css" href="assets/css/<%= nomeDoCss %>">
 
 </head>
 
@@ -84,7 +84,7 @@
 <section class="cards">
     <div class="card">
 
-        <img src="<%= request.getContextPath() %>/images/pags-alunos/card-observacao.png" alt="Notas e Observações">
+        <img src="assets/images/pags-alunos/card-observacao.png" alt="Notas e Observações">
         <h3>Visualizar notas e observações</h3>
         <p>Seção reservada para visualização de notas e observações.</p>
 
@@ -93,7 +93,7 @@
 
     <div class="card">
 
-        <img src="<%= request.getContextPath() %>/images/pags-alunos/card-boletim.png" alt="Emitir Boletim Escolar">
+        <img src="assets/images/pags-alunos/card-boletim.png" alt="Emitir Boletim Escolar">
         <h3>Emitir Boletim Escolar</h3>
         <p>Seção reservada para a emissão do boletim escolar - sujeito a não disponibilidade de notas*.</p>
 
@@ -102,7 +102,7 @@
 
     <div class="card">
 
-        <img src="<%= request.getContextPath() %>/images/pags-alunos/card-perfil.png" alt="Visualizar Perfil">
+        <img src="assets/images/pags-alunos/card-perfil.png" alt="Visualizar Perfil">
         <h3>Visualizar perfil</h3>
         <p>Seção reservada para visualizar seu perfil. - Visualização de: Nome, período, turma, email e cpf.</p>
 
