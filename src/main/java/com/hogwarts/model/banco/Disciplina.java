@@ -4,13 +4,20 @@ public class Disciplina {
 //    Criando atributos
     private int id;
     private String nome;
+    private Professor professor;
 
 //    Construtor
     public Disciplina() {}
 
-    public Disciplina(int id, String nome) {
+    public Disciplina(int id, String nome, Professor professor) {
         this.id = id;
         this.nome = nome;
+        this.professor = professor;
+    }
+
+    public Disciplina(String nome, Professor professor) {
+        this.nome = nome;
+        this.professor = professor;
     }
 
 //    Getters e Setters
@@ -28,5 +35,13 @@ public class Disciplina {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
     }
 }

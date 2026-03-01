@@ -23,6 +23,14 @@
           <scope>compile</scope>
       </dependency>
 
+      <!-- Source: https://mvnrepository.com/artifact/com.github.librepdf/openpdf -->
+      <dependency>
+          <groupId>com.github.librepdf</groupId>
+          <artifactId>openpdf</artifactId>
+          <version>3.0.0</version>
+          <scope>compile</scope>
+      </dependency>
+
       <dependency>
           <groupId>jakarta.servlet</groupId>
           <artifactId>jakarta.servlet-api</artifactId>
@@ -67,9 +75,10 @@
           <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-compiler-plugin</artifactId>
+              <version>3.11.0</version>
               <configuration>
-                  <source>15</source>
-                  <target>15</target>
+                  <source>21</source>
+                  <target>21</target>
               </configuration>
           </plugin>
       </plugins>

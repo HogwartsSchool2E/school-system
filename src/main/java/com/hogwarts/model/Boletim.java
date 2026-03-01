@@ -26,7 +26,8 @@ public class Boletim {
         this.professor = professor;
         this.casaHogwarts = casaHogwarts;
 
-        if (this.media <= 5) this.situacao = Situacao.REPROVADO;
+        if (this.media == 0) this.situacao = Situacao.EM_ANDAMENTO;
+        else if (this.media <= 5) this.situacao = Situacao.REPROVADO;
         else if (this.media < 7) this.situacao = Situacao.RECUPERACAO;
         else this.situacao = Situacao.APROVADO;
     }

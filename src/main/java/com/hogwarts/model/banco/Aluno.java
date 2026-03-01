@@ -21,6 +21,14 @@ public class Aluno {
         this.casaHogwarts = casaHogwarts;
     }
 
+    public Aluno(String nome, String cpf, String email, String senha, CasaHogwarts casaHogwarts) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.email = email;
+        this.senha = senha;
+        this.casaHogwarts = casaHogwarts;
+    }
+
 //    Getters e Setters
     public int getMatricula() {
         return matricula;

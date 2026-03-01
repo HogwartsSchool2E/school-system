@@ -11,6 +11,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 
 @WebServlet(name = "observacoesServlet", value = "/observacoes-servlet")
@@ -21,6 +23,12 @@ public class ObservacoesServlet extends HttpServlet {
 //            Criando atributos
             String acao = req.getParameter("acao");
             ObservacaoDAO o = new ObservacaoDAO();
+
+//            seta url em utf-8 (permite que disciplina como poções possa ser passada como parametro)
+            String disc = req.getParameter("disciplina");
+            String discEncaminhar = URLEncoder.encode(disc, StandardCharsets.UTF_8);
+
+            req.setAttribute("disciplina", disc);
 
 //            Verifica tipo de ação
             if ("adicionar".equals(acao)){
@@ -44,7 +52,7 @@ public class ObservacoesServlet extends HttpServlet {
                 o.deletarObs(aluno, disciplina);
             }
 
-            resp.sendRedirect( req.getContextPath() + "/boletim-servlet?tipo=observacao");
+            resp.sendRedirect( req.getContextPath() + "/boletim-servlet?tipo=observacao&disciplina="+discEncaminhar);
         } catch (SQLException sqle){
             sqle.printStackTrace();
             req.setAttribute("mensagemErro", "Houve um problema com o banco de dados, não se preocupe, tente novamente em alguns minutos.");
@@ -52,7 +60,7 @@ public class ObservacoesServlet extends HttpServlet {
         } catch (ClassNotFoundException cnfe){
             cnfe.printStackTrace();
             req.setAttribute("mensagemErro", "O sistema não conseguiu acessar um componente necessário, não se preocupe, tente novamente em alguns minutos.");
-            req.getRequestDispatcher("WEB-INF/pagina-erro.jsp");
+            req.getRequestDispatcher("WEB-INF/pagina-erro.jsp").forward(req, resp);
         } catch (NumberFormatException nfe) {
             nfe.printStackTrace();
             req.setAttribute("mensagemErro", "Houve um erro ao processar as informações, não se preocupe, tente novamente em alguns minutos.");
