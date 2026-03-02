@@ -10,23 +10,20 @@
     }
 
     String casaHogwartsNome = aluno.getCasaHogwarts().getNome();
-    String nomeDoCss;
+    String nomeCss;
 
     switch (casaHogwartsNome.toLowerCase()) {
         case "grifinória":
-            nomeDoCss = "grifinoria.css";
+            nomeCss = "grifinoria.css";
             break;
         case "sonserina":
-            nomeDoCss = "sonserina.css";
+            nomeCss = "sonserina.css";
             break;
         case "lufa-lufa":
-            nomeDoCss = "lufa-lufa.css";
-            break;
-        case "corvinal":
-            nomeDoCss = "corvinal.css";
+            nomeCss = "lufa-lufa.css";
             break;
         default:
-            nomeDoCss = "default.css"; // Boa prática para evitar erros
+            nomeCss = "corvinal.css";
             break;
     }
 %>
@@ -44,7 +41,7 @@
           rel="stylesheet">
     <link rel="shortcut icon" href="<%=request.getContextPath()%>/assets/icons/favicon.ico" type="image/x-icon">
 
-    <link rel="stylesheet" type="text/css" href="assets/css/casas/<%= nomeDoCss %>">
+    <link rel="stylesheet" type="text/css" href="assets/css/casas/<%= nomeCss %>">
 
 </head>
 

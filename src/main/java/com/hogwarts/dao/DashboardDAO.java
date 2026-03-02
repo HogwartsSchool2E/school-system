@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class DashboardDAO {
@@ -24,8 +25,8 @@ public class DashboardDAO {
 
     private HashMap<String, Double> gerarRanking(){
 //        Criando atributos
-        String sql = "SELECT * FROM ranking;";
-        HashMap<String, Double> ranking = new HashMap<>();
+        String sql = "SELECT * FROM ranking ORDER BY media DESC;";
+        HashMap<String, Double> ranking = new LinkedHashMap<>();
 
 //        Realizando busca no banco de dados
         try (Connection conn = Conexao.conectar();
