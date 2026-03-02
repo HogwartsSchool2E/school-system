@@ -17,6 +17,7 @@
     <head>
         <title>Erro</title>
         <link rel="shortcut icon" href="<%=request.getContextPath()%>/assets/icons/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/pagina-erro.css">
     </head>
     <body>
         <main>

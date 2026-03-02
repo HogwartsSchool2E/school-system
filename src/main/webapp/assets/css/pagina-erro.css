@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root{
+    --bg: #0f1115;
+    --card: #151922;
+    --text: #eef0f4;
+    --muted: #b8bfcc;
+    --erro: #dc2626;
+    --erro-2: #991b1b;
+    --erro-soft: rgba(220, 38, 38, .12);
+    --erro-softier: #fecaca;
+    --border-erro: rgba(220,38,38,.35);
+    --border: rgba(255,255,255,.08);
+    --shadow: rgba(0,0,0,.35);
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body{
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    color: var(--text);
+    background:
+        radial-gradient(900px 520px at 18% 12%, rgba(220,38,38,.2), transparent 60%),
+        radial-gradient(750px 480px at 92% 90%, rgba(220,38,38,.1), transparent 60%),
+        var(--bg);
+}
+
+main{
+    width: 100%;
+    max-width: 720px;
+    text-align: center;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 30px 25px 25px;
+    box-shadow: 0 18px 55px var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+main::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 6px;
+    width: 100%;
+    background: linear-gradient(90deg, var(--erro), var(--erro-2));
+}
+
+h1{
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+}
+
+h1::after{
+    content: " \26A0\FE0E";
+    color: var(--erro);
+    font-weight: 700;
+}
+
+strong{
+    display: block;
+    margin-top: 10px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    line-height: 1.35;
+    background: var(--erro-soft);
+    border: 1px solid var(--border-erro);
+    color: var(--erro-softier);
+    font-weight: 600;
+    word-break: break-word;
+    max-height: 240px;
+    overflow: auto;
+}
