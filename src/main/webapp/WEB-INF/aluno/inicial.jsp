@@ -5,12 +5,12 @@
     Aluno aluno = (Aluno) session.getAttribute("aluno");
 
     if (aluno == null) {
-        response.sendRedirect("antigocadastro.html");
+        response.sendRedirect("../webapp/index.html");
         return;
     }
 
     String casaHogwartsNome = aluno.getCasaHogwarts().getNome();
-    String nomeDoCss = "";
+    String nomeDoCss;
 
     switch (casaHogwartsNome.toLowerCase()) {
         case "grifinória":
@@ -44,7 +44,7 @@
           rel="stylesheet">
     <link rel="shortcut icon" href="<%=request.getContextPath()%>/assets/icons/favicon.ico" type="image/x-icon">
 
-    <link rel="stylesheet" type="text/css" href="assets/css/<%= nomeDoCss %>">
+    <link rel="stylesheet" type="text/css" href="assets/css/casas/<%= nomeDoCss %>">
 
 </head>
 

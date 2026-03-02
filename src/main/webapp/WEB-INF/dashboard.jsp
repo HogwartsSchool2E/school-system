@@ -19,7 +19,7 @@
 <html>
 <head>
     <title>Dashboard</title>
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/dashboard.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/servlet-pages/dashboard.css">
     <link rel="shortcut icon" href="<%=request.getContextPath()%>/assets/icons/favicon.ico" type="image/x-icon">
 
 </head>

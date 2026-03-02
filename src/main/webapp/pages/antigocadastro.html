@@ -10,7 +10,7 @@
 </head>
 <body>
 <main>
-    <form action="dashboard-servlet" method="get">
+    <form action="../dashboard-servlet" method="get">
         <input type="submit" value="Clique aqui para ver dashboards" >
     </form>
 
@@ -22,7 +22,7 @@
         <dialog id="modal-2">
             <button type="button" class="fecha-modal" data-modal="modal-2">x</button>
 
-            <form action="admin-servlet" method="post">
+            <form action="../admin-servlet" method="post">
                 <label for="email">Digite o email de administrador</label>
                 <input type="email" name="email" id="email" autocomplete="on" maxlength="60" required>
 
@@ -40,7 +40,7 @@
         <dialog id="modal-3">
             <button type="button" class="fecha-modal" data-modal="modal-3">x</button>
 
-            <form action="professor-servlet" method="post">
+            <form action="../professor-servlet" method="post">
                 <label for="usuario">Digite o nome do usuário:</label>
                 <input type="text" name="usuario" id="usuario" autocomplete="on" maxlength="50" required>
 
@@ -58,7 +58,7 @@
         <dialog id="modal-4">
             <button type="button" class="fecha-modal" data-modal="modal-4">x</button>
 
-            <form action="aluno-servlet" method="post">
+            <form action="../aluno-servlet" method="post">
                 <label for="email-aluno">Digite seu email:</label>
                 <input type="email" name="email" id="email-aluno">
 
@@ -68,15 +68,6 @@
                 <button type="submit" name="acao" value="login">Enviar dados</button>
             </form>
         </dialog>
-    </div>
-
-    <div>
-        <h1>BORDIN PART</h1>
-        <button>
-            <a href="../index.html">Cadasrtro</a>
-        </button>
-
-        <button><a href="recuperarSenha.html">Recuperar senha</a></button>
     </div>
 </main>
 

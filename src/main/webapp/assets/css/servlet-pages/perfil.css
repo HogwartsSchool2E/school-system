@@ -8,7 +8,7 @@ body {
     justify-content: center;
     align-items: center;
     font-family: 'Poppins', sans-serif;
-    background-image: url('../images/fundoTela.png');
+    background-image: url('../../images/fundoTela.png');
     background-size: cover;
 }
 

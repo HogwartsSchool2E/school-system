@@ -18,7 +18,7 @@
 <head>
     <title>Disciplinas</title>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/modal.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/disciplinas.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/servlet-pages/disciplinas.css">
     <link rel="shortcut icon" href="<%=request.getContextPath()%>/assets/icons/favicon.ico" type="image/x-icon">
 </head>
 <body>

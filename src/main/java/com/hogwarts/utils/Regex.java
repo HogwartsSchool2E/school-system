@@ -11,7 +11,7 @@ public class Regex {
     }
 
     public static boolean checarCpf(String cpf){
-        return Pattern.matches("^\\D{11}$", apenasNumeros(cpf));
+        return Pattern.matches("^\\d{11}$", apenasNumeros(cpf));
     }
 
     public static boolean checarEmail(String email){

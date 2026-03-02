@@ -12,7 +12,7 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/perfil.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/servlet-pages/perfil.css">
     <link rel="shortcut icon" href="<%=request.getContextPath()%>/assets/icons/favicon.ico" type="image/x-icon">
 </head>
 <body>

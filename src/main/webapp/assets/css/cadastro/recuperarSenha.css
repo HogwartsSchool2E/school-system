@@ -10,9 +10,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+
     background-image:
         linear-gradient(rgba(10, 10, 30, 0.85), rgba(10, 10, 30, 0.85)),
-        url("../images/fundoPrincipal.jpg");
+        url("../../images/fundoPrincipal.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -21,74 +22,65 @@ body {
 #container-principal {
     width: 85%;
     max-width: 900px;
-    max-height: 95vh;
-    height: auto;
     display: flex;
     border-radius: 25px;
     overflow: hidden;
+
     background: rgba(25, 25, 35, 0.6);
-    box-shadow: 0 0 40px rgba(0, 0, 0, 1);
+    box-shadow: 0 0 40px rgba(0,0,0,0.6);
 }
 
 .lado-esquerdo {
     width: 45%;
     padding: 60px 40px;
     display: flex;
-    align-items: flex-start;
-    /* Background com a imagem de fundo 👽📷*/
-    background-image:
-        linear-gradient(rgba(10, 10, 30, 0.3), rgba(10, 10, 30, 0.5)),
-        url("../images/estudantes.jpg");
-    background-size: 345%;
-    background-position: center;
-    background-repeat: no-repeat;
+    align-items: center;
 }
 
 .lado-esquerdo h1 {
     color: #f5d28c;
-    font-size: 30px;
+    font-size: 28px;
     line-height: 1.5;
 }
 
 .lado-esquerdo span {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Cinzel', serif;
     font-size: 30px;
+    letter-spacing: 2px;
 }
 
 .lado-direito {
     width: 55%;
-    padding: 50px 40px;
+    padding: 60px 40px;
     color: #f5d28c;
 }
 
 .lado-direito h2 {
     margin-bottom: 25px;
-    font-size: 28px;
+    font-size: 26px;
 }
 
-#formulario-cadastro {
+form {
     display: flex;
     flex-direction: column;
 }
 
 label {
+    margin-bottom: 8px;
     font-size: 14px;
-    margin-top: 10px;
-    margin-bottom: 6px;
 }
 
 input {
-    padding: 12px;
+    padding: 14px;
     border-radius: 10px;
     border: none;
     outline: none;
     background: rgba(255, 255, 255, 0.15);
     color: white;
-    margin-bottom: 8px;
+    margin-bottom: 20px;
 }
 
-#botao-principal {
-    margin-top: 20px;
+#botao-recuperar {
     padding: 14px;
     border-radius: 12px;
     border: none;
@@ -97,17 +89,15 @@ input {
     color: #f5d28c;
     font-weight: bold;
     transition: 0.3s;
+    margin-bottom: 10px;
 }
 
-#botao-principal:hover {
+#botao-recuperar:hover {
     transform: scale(1.03);
     opacity: 0.9;
 }
 
-#botao-secundario{
-    display: inline-block;
-    text-align: center;
-    margin-top: 12px;
+#botao-secundario {
     padding: 12px;
     border-radius: 12px;
     border: 1px solid #f5d28c;
@@ -115,20 +105,14 @@ input {
     color: #f5d28c;
     cursor: pointer;
     transition: 0.3s;
-    text-decoration: none;
 }
 
-#botao-secundario:hover{
+#botao-secundario:hover {
     background-color: #f5d28c;
     color: #111;
 }
 
-#container-principal {
-    max-height: 95vh;
-    overflow: hidden;
-}
-
-.lado-direito{
-    overflow-y: auto;
-    max-height: 95vh;
+#mensagem {
+    margin-top: 15px;
+    font-size: 14px;
 }
