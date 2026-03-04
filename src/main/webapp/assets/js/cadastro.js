@@ -7,14 +7,11 @@
 
         event.preventDefault(); // impede envio automático do form
 
-        const aluno = document.getElementById("aluno").value.trim();
-        const cpf = document.getElementById("cpf").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const casa = document.getElementById("casa").value.trim();
+        const user_email = document.getElementById("user_email").value.trim();
         const senha = document.getElementById("senha").value.trim();
         const confSenha = document.getElementById("confirmar-senha").value.trim();
 
-        if (!aluno || !cpf || !email || !casa || !senha || !confSenha) {
+        if (!user_email || !senha || !confSenha) {
             alert("Todos os campos devem ser preenchidos!");
             return;
         }
@@ -25,6 +22,18 @@
         }
 
         alert("Cadastro realizado com sucesso!");
+    });
+
+    const btnRecuperar = document.getElementById("botao-recuperar");
+
+    btnRecuperar.addEventListener("click", function (event) {
+         // gera senha.
+        const caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let senha = "";
+        for (let i = 0; i < 5; i++) {
+            senha += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+        }
+        alert(`Sua nova senha é: ${senha}`);
     });
 
 });
