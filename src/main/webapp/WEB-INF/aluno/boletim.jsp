@@ -19,7 +19,8 @@
 <html>
 <head>
     <title>Boletim - <%=aluno.getNome()%></title>
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/modal.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/boletins/boletim.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/servlet-pages/modal.css">
     <link rel="shortcut icon" href="<%=request.getContextPath()%>/assets/icons/favicon.ico" type="image/x-icon">
 </head>
 <body>

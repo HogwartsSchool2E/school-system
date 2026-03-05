@@ -10,6 +10,7 @@
     --botao-nao-fundo: rgba(220, 38, 38, .10);
     --botao-nao-borda: rgba(220, 38, 38, .5);
     --botao-nao-texto: #7f1d1d;
+    --azul-escuro-do-modal: rgba(10, 10, 42, 0.89);
 }
 
 * {
@@ -125,12 +126,15 @@ dialog{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: var(--cinza-fundo);
+    background: var(--azul-escuro-do-modal);
+    color: var(--branco-fundo);
     width: 80%;
     max-width: 600px;
     height: auto;
     min-height: 200px;
     z-index: 1000;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 dialog > p{
@@ -157,7 +161,8 @@ dialog strong{
 .fecha-modal{
     border-radius: 10px;
     border: 1px solid var(--sombra);
-    background: var(--branco-fundo);
+    background: var(--cinza-fundo); /* Fundo do botão de fechar azul escuro */
+    color: var(--branco-fundo); /* Texto do botão de fechar branco */
     cursor: pointer;
     font-weight: 900;
     line-height: 1;
@@ -181,7 +186,6 @@ dialog form .fecha-modal{
     height: auto;
     border-radius: 10px;
     border: 1px solid var(--sombra);
-    background: var(--branco-fundo);
     padding: 10px 15px;
     font-weight: 700;
 }
@@ -205,7 +209,8 @@ dialog select{
     padding: 10px 15px;
     border-radius: 10px;
     border: 1px solid var(--sombra);
-    background: var(--branco-fundo);
+    background: var(--cinza-fundo); /* Fundo dos inputs azul escuro */
+    color: var(--branco-fundo); /* Texto dos inputs branco */
     outline: none;
 }
 
@@ -242,8 +247,8 @@ dialog form button[type="submit"]{
 }
 
 dialog form button[type="button"]{
-    background: var(--branco-fundo);
-    color: var(--cinza-fundo);
+    background: var(--cinza-fundo); /* Fundo dos botões (ex: "Cancelar") azul escuro */
+    color: var(--branco-fundo); /* Texto dos botões branco */
 }
 
 dialog form button[type="submit"] + button{
@@ -263,6 +268,7 @@ dialog .ajuste{
     padding: 8px 12px;
     border-radius: 10px;
     border: 1px solid var(--sombra);
-    background: var(--branco-fundo);
+    background: var(--cinza-fundo); /* Fundo do .ajuste azul escuro */
     font-weight: 800;
+    color: var(--branco-fundo); /* Texto do .ajuste branco */
 }
