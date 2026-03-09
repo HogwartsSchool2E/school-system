@@ -105,24 +105,28 @@ section button:active {
 }
 
 .acao-painel {
+    display: inline-block;
     width: 100%;
     max-width: 420px;
+    font-family: 'Arial', sans-serif;
     background-color: var(--cor-destaque);
     color: rgba(0, 0, 0, 0.53);
     border: none;
     padding: 12px 25px;
     border-radius: 15px;
     font-size: 1.1em;
-    font-weight: normal;
-    line-height: normal;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
     margin: 10px auto;
-    box-shadow: none;
+    text-align: center;
     text-decoration: none;
 }
 
 .acao-painel:hover {
     background-color: #d4b057;
     transform: translateY(-2px);
-    box-shadow: none;
-    filter: none;
+}
+
+.acao-painel:active, .abre-modal.acao-painel:active {
+    transform: translateY(0);
 }
