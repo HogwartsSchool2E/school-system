@@ -1,0 +1,67 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+    <!DOCTYPE html>
+    <html lang="pt-br>
+
+<head>
+<meta charset=" UTF-8">
+    <title>Recuperar Senha - Hogwarts</title>
+
+    <link rel="stylesheet" href="../assets/css/cadastro/recuperarSenha.css">
+    <link rel="shortcut icon" href="../assets/icons/favicon.ico">
+
+    </head>
+
+    <body>
+
+        <div id="container-principal">
+
+            <div class="lado-esquerdo">
+                <h1>
+                    Recupere seu acesso ao<br>
+                    portal de <span>Hogwarts!</span>
+                </h1>
+            </div>
+
+            <div class="lado-direito">
+
+                <h2>Recuperação de Senha</h2>
+
+                <form id="formulario-recuperacao" action="" method="post">
+
+                    <label>Email</label>
+                    <input type="email" name="email" id="email-recuperacao" required>
+
+                    <label>Usuário (apenas professores)</label>
+                    <input type="text" name="usuario" id="usuario">
+
+                    <label>Digite a senha enviada</label>
+                    <input type="text" id="senha_digitada">
+
+                    <input type="hidden" name="senha" id="senha_final">
+
+                    <button type="button" id="botao-recuperar">
+
+                        Enviar senha
+
+                    </button>
+
+                    <button type="submit" id="botao-concluir">
+
+                        Finalizar alteração
+
+                    </button>
+
+                    <p id="mensagem"></p>
+
+                </form>
+
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+        <script src="../assets/js/recuperarSenha.js"></script>
+
+    </body>
+
+    </html>
