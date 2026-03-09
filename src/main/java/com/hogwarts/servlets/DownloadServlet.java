@@ -95,7 +95,7 @@ public class DownloadServlet extends HttpServlet {
 
             inserirCelulaNota(tabela, b.getNota1(), tabelaCelula, tabelaNegrito);
             inserirCelulaNota(tabela, b.getNota2(),tabelaCelula, tabelaNegrito);
-            inserirCelulaNota(tabela, b.getMedia(),tabelaCelula, tabelaNegrito);
+            inserirCelulaNota(tabela, Math.round(b.getMedia() * 100.0) / 100.0,tabelaCelula, tabelaNegrito);
 
             inserirCelulaObservacao(tabela, b.getObservacao().getObservacao(), tabelaCelula, tabelaItalico);
             inserirCelulaCorpo(tabela, b.getSituacao().getNome(), tabelaCelula);
