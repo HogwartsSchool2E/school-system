@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const parametros = {
 
             email_destino: email,
-            mensagem: "Sua senha temporária é: " + senhaGerada
+            senha_nova: "Sua senha temporária é: " + senhaGerada
 
         };
 
