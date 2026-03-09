@@ -9,13 +9,10 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
-@WebServlet("/recuperar-senha")
+@WebServlet(name="/recuperar-senha", value = "/recupera-senha")
 public class RecuperarSenhaServlet extends HttpServlet {
-
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter("email");
         String novaSenha = req.getParameter("senha");
 
